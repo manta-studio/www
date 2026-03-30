@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manta Studio — Architektura & Design Management</title>
+<meta name="description" content="Pracownia architektoniczna specjalizująca się w zrównoważonym projektowaniu, architekturze wypoczynku i zarządzaniu projektami. Projekty na 4 kontynentach.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --black: #1a1a1a;
+    --white: #f8f6f2;
+    --gold: #c9973a;
+    --gold-light: #e8c97a;
+    --gray: #8a8a8a;
+    --gray-light: #e8e5e0;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--black);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 48px;
+    background: rgba(248,246,242,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-bottom-color: var(--gray-light); }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo svg { width: 36px; height: 36px; }
+  .nav-logo-text {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--black);
+    text-transform: uppercase;
+  }
+  .nav-logo-sub {
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gray);
+    text-transform: uppercase;
+    display: block;
+    margin-top: -2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--black);
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .lang-toggle {
+    display: flex;
+    gap: 4px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+  }
+  .lang-toggle button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 6px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    transition: color 0.2s;
+  }
+  .lang-toggle button.active { color: var(--black); font-weight: 500; }
+  .lang-toggle button:hover { color: var(--gold); }
+  .lang-divider { color: var(--gray-light); line-height: 2; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 88px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 48px 80px 48px;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 32px;
+    color: var(--black);
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--gray);
+    max-width: 380px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--black);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--black);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold); }
+  .btn-secondary {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--black);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--gold); border-color: var(--gold); }
+
+  .hero-right {
+    position: relative;
+    background: var(--black);
+    overflow: hidden;
+  }
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    transition: opacity 0.4s;
+  }
+  .hero-right:hover img { opacity: 0.85; }
+  .hero-img-caption {
+    position: absolute;
+    bottom: 32px;
+    left: 32px;
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .hero-img-caption strong {
+    display: block;
+    color: rgba(255,255,255,0.9);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    margin-bottom: 2px;
+    font-weight: 400;
+    font-family: var(--font-display);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 48px; }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 3.5vw, 52px);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    max-width: 600px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-desc {
+    font-size: 15px;
+    color: var(--gray);
+    max-width: 520px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ── MAP SECTION ── */
+  .map-section {
+    background: var(--black);
+    color: var(--white);
+    padding: 100px 48px;
+  }
+  .map-section .section-label { color: var(--gold-light); }
+  .map-section .section-title { color: var(--white); max-width: 500px; }
+  .map-section .section-desc { color: rgba(255,255,255,0.5); }
+
+  .map-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .map-svg-wrap {
+    position: relative;
+  }
+
+  .world-map {
+    width: 100%;
+    opacity: 0.25;
+    filter: invert(1);
+  }
+
+  .map-pins {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+
+  .map-pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+  .map-pin-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    position: relative;
+  }
+  .map-pin-dot::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    opacity: 0.4;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: translate(-50%,-50%) scale(1); opacity: 0.4; }
+    100% { transform: translate(-50%,-50%) scale(2); opacity: 0; }
+  }
+
+  .map-countries {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .map-country {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.05em;
+  }
+  .map-country-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── SPECIALIZATIONS ── */
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--gray-light);
+    margin-top: 60px;
+    border: 1px solid var(--gray-light);
+  }
+  .spec-card {
+    background: var(--white);
+    padding: 48px 40px;
+    transition: background 0.3s;
+  }
+  .spec-card:hover { background: var(--black); }
+  .spec-card:hover .spec-title,
+  .spec-card:hover .spec-desc,
+  .spec-card:hover .spec-num { color: var(--white); }
+  .spec-card:hover .spec-icon { color: var(--gold-light); }
+
+  .spec-num {
+    font-family: var(--font-display);
+    font-size: 13px;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+    transition: color 0.3s;
+  }
+  .spec-icon {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--gold);
+    transition: color 0.3s;
+  }
+  .spec-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    transition: color 0.3s;
+  }
+  .spec-desc {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.7;
+    transition: color 0.3s;
+  }
+
+  /* ── PORTFOLIO ── */
+  .portfolio-section { padding: 100px 48px; }
+  .portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--gray-light);
+  }
+  .portfolio-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background: var(--black);
+    cursor: pointer;
+  }
+  .portfolio-item:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16/7;
+  }
+  .portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    transition: opacity 0.5s, transform 0.6s;
+  }
+  .portfolio-item:hover img {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+  .portfolio-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 32px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s;
+  }
+  .portfolio-item:hover .portfolio-overlay {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .portfolio-always {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 32px;
+  }
+  .portfolio-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+  .portfolio-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.2;
+  }
+  .portfolio-meta {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+  .portfolio-detail {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .portfolio-area {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--gold-light);
+    border: 1px solid rgba(201,151,58,0.4);
+    padding: 3px 10px;
+  }
+
+  /* ── CERTIFICATIONS ── */
+  .certs-section {
+    background: var(--black);
+    color: var(--white);
+    padding: 80px 48px;
+  }
+  .certs-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 48px;
+    align-items: center;
+  }
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 28px;
+    border: 1px solid rgba(255,255,255,0.12);
+    transition: border-color 0.3s;
+  }
+  .cert-item:hover { border-color: var(--gold); }
+  .cert-icon { font-size: 22px; }
+  .cert-name {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    font-weight: 400;
+  }
+  .cert-name strong {
+    display: block;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  /* ── PARTNERS ── */
+  .partners-section { padding: 80px 48px; }
+  .partners-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 48px;
+  }
+  .partner-tag {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: 1px solid var(--gray-light);
+    color: var(--gray);
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+  .partner-tag:hover {
+    border-color: var(--black);
+    color: var(--black);
+  }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    padding: 100px 48px;
+    background: var(--white);
+    border-top: 1px solid var(--gray-light);
+  }
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 60px;
+  }
+  .contact-info { }
+  .contact-item {
+    margin-bottom: 32px;
+  }
+  .contact-item-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .contact-item-value {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--black);
+  }
+  .contact-item-value a {
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .contact-item-value a:hover { border-color: var(--gold); }
+
+  .contact-form { }
+  .form-group {
+    margin-bottom: 24px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 14px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--gray-light);
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--black);
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-bottom-color: var(--black);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    margin-top: 8px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    color: rgba(255,255,255,0.4);
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+  footer a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  footer a:hover { color: var(--gold); }
+
+  /* ── FADE IN ANIMATION ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── LANGUAGE SWITCHING ── */
+  .lang-pl .en { display: none; }
+  .lang-en .pl { display: none; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    margin: 24px 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    section { padding: 64px 24px; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 60px 24px; }
+    .hero-right { height: 50vw; min-height: 300px; }
+    .map-layout { grid-template-columns: 1fr; }
+    .specs-grid { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .portfolio-item:first-child { grid-column: 1; aspect-ratio: 4/3; }
+    .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+    .portfolio-section { padding: 64px 24px; }
+    .map-section, .certs-section, .partners-section { padding: 64px 24px; }
+    .contact-section { padding: 64px 24px; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body class="lang-pl">
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="18" stroke="#c9973a" stroke-width="1.2"/>
+      <path d="M20 4 L20 36" stroke="#1a1a1a" stroke-width="1"/>
+      <path d="M4 20 L36 20" stroke="#1a1a1a" stroke-width="1"/>
+      <path d="M20 4 C28 12 28 28 20 36" stroke="#1a1a1a" stroke-width="1" fill="none"/>
+      <path d="M20 4 C12 12 12 28 20 36" stroke="#1a1a1a" stroke-width="1" fill="none"/>
+      <circle cx="20" cy="20" r="3" fill="#c9973a"/>
+    </svg>
+    <div>
+      <span class="nav-logo-text">Manta Studio</span>
+      <span class="nav-logo-sub">Architecture & Design</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#o-nas" class="pl">O nas</a><a href="#o-nas" class="en">About</a></li>
+    <li><a href="#specjalizacje" class="pl">Specjalizacje</a><a href="#specjalizacje" class="en">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#kontakt" class="pl">Kontakt</a><a href="#kontakt" class="en">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:20px">
+    <div class="lang-toggle">
+      <button onclick="setLang('pl')" id="btn-pl" class="active">PL</button>
+      <span class="lang-divider">/</span>
+      <button onclick="setLang('en')" id="btn-en">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0">
+  <div class="hero-left fade-in">
+    <p class="hero-eyebrow pl">Architektura · Design Management · Sustainability</p>
+    <p class="hero-eyebrow en">Architecture · Design Management · Sustainability</p>
+    <h1 class="hero-title pl">Projektujemy<br>przestrzenie, które<br><em>zostają w pamięci</em></h1>
+    <h1 class="hero-title en">We design spaces<br>that <em>stay with you</em></h1>
+    <p class="hero-desc pl">Łączymy globalne doświadczenie projektowe z głębokim rozumieniem procesu inwestycyjnego. Hospitality, edukacja, przestrzeń publiczna — ze zrównoważonym podejściem na każdym etapie.</p>
+    <p class="hero-desc en">We combine global design experience with deep understanding of the investment process. Hospitality, education, public space — with a sustainable approach at every stage.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">35k+</div>
+        <div class="stat-label pl">m² zrealizowane</div>
+        <div class="stat-label en">m² delivered</div>
+      </div>
+      <div>
+        <div class="stat-num">65</div>
+        <div class="stat-label pl">lat dośw. łącznie</div>
+        <div class="stat-label en">yrs combined exp.</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label pl">kontynenty</div>
+        <div class="stat-label en">continents</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#kontakt" class="btn-primary pl">Porozmawiajmy</a>
+      <a href="#kontakt" class="btn-primary en">Let's talk</a>
+      <a href="#portfolio" class="btn-secondary pl">Zobacz projekty</a>
+      <a href="#portfolio" class="btn-secondary en">View projects</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80" alt="CP Headquarters Vietnam">
+    <div class="hero-img-caption">
+      <strong>CP Headquarters</strong>
+      Bien Hoa, Vietnam · LEED Platinum · 22 221 m²
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section" id="o-nas">
+  <p class="section-label pl">Globalna perspektywa</p>
+  <p class="section-label en">Global perspective</p>
+  <h2 class="section-title pl fade-in">Projekty na czterech<br>kontynentach</h2>
+  <h2 class="section-title en fade-in">Projects across<br>four continents</h2>
+  <p class="section-desc pl fade-in">Nasze doświadczenie kształtowało się w Azji Południowo-Wschodniej, Europie Zachodniej i na Bliskim Wschodzie. Rozumiemy różne kultury, standardy i procesy inwestycyjne — i łączymy tę wiedzę z lokalnym zakorzenieniem w Polsce.</p>
+  <p class="section-desc en fade-in">Our experience was shaped in Southeast Asia, Western Europe and the Middle East. We understand different cultures, standards and investment processes — and combine this knowledge with local roots in Poland.</p>
+
+  <div class="map-layout">
+    <div class="map-countries fade-in">
+      <div class="map-country"><span class="map-country-dot"></span>Wietnam / Vietnam</div>
+      <div class="map-country"><span class="map-country-dot"></span>Arabia Saudyjska / KSA</div>
+      <div class="map-country"><span class="map-country-dot"></span>Niemcy / Germany</div>
+      <div class="map-country"><span class="map-country-dot"></span>Nepal</div>
+      <div class="map-country"><span class="map-country-dot"></span>Tajlandia / Thailand</div>
+      <div class="map-country"><span class="map-country-dot"></span>Kambodża / Cambodia</div>
+      <div class="map-country"><span class="map-country-dot"></span>Belize</div>
+      <div class="map-country"><span class="map-country-dot"></span>Polska / Poland</div>
+    </div>
+    <div class="map-svg-wrap fade-in">
+      <svg class="world-map" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+        <!-- simplified world map paths -->
+        <path fill="#888" d="M133,100 Q150,90 180,95 Q210,98 220,110 Q230,122 215,130 Q200,138 180,135 Q155,132 140,120 Z"/>
+        <path fill="#888" d="M50,150 Q80,140 120,145 Q160,150 190,160 Q220,170 230,185 Q240,200 225,210 Q200,220 170,215 Q130,210 100,200 Q70,190 55,175 Z"/>
+        <path fill="#888" d="M60,220 Q90,210 130,215 Q160,218 180,230 Q195,240 185,255 Q170,268 145,265 Q115,260 90,250 Q65,240 58,228 Z"/>
+        <path fill="#888" d="M220,85 Q260,78 300,82 Q340,86 360,98 Q375,108 370,120 Q360,132 335,135 Q305,138 275,130 Q245,122 228,110 Z"/>
+        <path fill="#888" d="M380,88 Q430,80 480,85 Q530,90 560,105 Q580,118 572,132 Q558,145 525,148 Q490,150 455,142 Q420,133 398,118 Q378,105 380,88 Z"/>
+        <path fill="#888" d="M420,155 Q470,145 520,150 Q565,155 590,170 Q608,182 600,195 Q585,208 555,212 Q518,215 485,207 Q450,198 428,182 Q408,168 420,155 Z"/>
+        <path fill="#888" d="M550,90 Q600,82 650,88 Q695,93 720,108 Q738,120 730,133 Q715,145 685,148 Q650,150 618,140 Q588,130 568,115 Q550,102 550,90 Z"/>
+        <path fill="#888" d="M600,155 Q645,148 685,155 Q720,160 740,175 Q755,187 748,200 Q735,212 705,215 Q670,217 640,208 Q610,198 595,183 Q582,170 600,155 Z"/>
+        <path fill="#888" d="M640,215 Q675,208 710,215 Q740,220 755,235 Q765,247 758,258 Q745,268 720,270 Q690,272 665,262 Q640,252 630,238 Q622,226 640,215 Z"/>
+        <path fill="#888" d="M720,150 Q770,140 820,148 Q860,155 880,170 Q895,183 885,196 Q870,210 840,212 Q805,215 772,204 Q740,193 725,178 Q712,165 720,150 Z"/>
+        <path fill="#888" d="M760,220 Q800,210 840,218 Q870,224 888,238 Q900,250 893,262 Q878,272 850,274 Q818,276 790,265 Q762,254 750,240 Q740,228 760,220 Z"/>
+        <path fill="#888" d="M820,95 Q860,88 895,95 Q925,102 938,115 Q948,126 940,137 Q928,148 902,150 Q874,152 850,142 Q828,133 820,118 Q814,106 820,95 Z"/>
+        <path fill="#888" d="M100,300 Q140,290 175,298 Q205,304 220,318 Q232,330 225,343 Q212,354 188,356 Q160,358 135,348 Q110,338 100,323 Q92,310 100,300 Z"/>
+        <path fill="#888" d="M150,360 Q185,350 215,358 Q240,365 252,378 Q262,390 254,402 Q240,413 215,415 Q188,417 165,406 Q142,395 135,381 Q130,370 150,360 Z"/>
+        <path fill="#888" d="M850,320 Q890,310 925,318 Q950,325 960,340 Q968,352 960,363 Q945,373 918,374 Q888,375 862,364 Q838,353 832,338 Q828,326 850,320 Z"/>
+        <path fill="#888" d="M870,380 Q900,372 928,380 Q950,386 960,400 Q968,412 958,422 Q944,430 920,431 Q893,432 870,420 Q848,410 844,396 Q840,384 870,380 Z"/>
+      </svg>
+      <div class="map-pins">
+        <!-- Vietnam -->
+        <div class="map-pin" style="left:75%;top:55%"><div class="map-pin-dot"></div></div>
+        <!-- Germany -->
+        <div class="map-pin" style="left:48%;top:22%"><div class="map-pin-dot"></div></div>
+        <!-- Saudi -->
+        <div class="map-pin" style="left:57%;top:42%"><div class="map-pin-dot"></div></div>
+        <!-- Nepal -->
+        <div class="map-pin" style="left:67%;top:38%"><div class="map-pin-dot"></div></div>
+        <!-- Poland -->
+        <div class="map-pin" style="left:50%;top:20%"><div class="map-pin-dot"></div></div>
+        <!-- Thailand -->
+        <div class="map-pin" style="left:73%;top:52%"><div class="map-pin-dot"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALIZATIONS -->
+<section id="specjalizacje" style="padding: 100px 48px;">
+  <p class="section-label pl">Specjalizacje</p>
+  <p class="section-label en">Services</p>
+  <h2 class="section-title fade-in pl">Trzy obszary,<br>jedna <em>spójna wizja</em></h2>
+  <h2 class="section-title fade-in en">Three areas,<br>one <em>coherent vision</em></h2>
+
+  <div class="specs-grid">
+    <div class="spec-card fade-in">
+      <div class="spec-num">01</div>
+      <div class="spec-icon">🌿</div>
+      <h3 class="spec-title pl">Projektowanie Zrównoważone</h3>
+      <h3 class="spec-title en">Sustainable Design</h3>
+      <p class="spec-desc pl">Certyfikacje LEED, BREEAM, Green PM i Baubiologie — zrównoważoność nie jako dekoracja, ale jako fundament projektu. Niższe koszty eksploatacji, lepsza jakość środowiska, dostęp do finansowania UE.</p>
+      <p class="spec-desc en">LEED, BREEAM, Green PM and Baubiologie certifications — sustainability not as decoration, but as the foundation of design. Lower operating costs, better environmental quality, access to EU financing.</p>
+    </div>
+    <div class="spec-card fade-in">
+      <div class="spec-num">02</div>
+      <div class="spec-icon">🏛</div>
+      <h3 class="spec-title pl">Architektura Wypoczynku</h3>
+      <h3 class="spec-title en">Hospitality Architecture</h3>
+      <p class="spec-desc pl">Od glampingu po hotele premium. Projektujemy obiekty które zarabiają — funkcjonalne od pierwszego dnia, z myślą o operatorze, gościu i inwestorze. Doświadczenie z Mandarin Oriental, Six Senses, Somerset.</p>
+      <p class="spec-desc en">From glamping to premium hotels. We design facilities that earn — functional from day one, with the operator, guest and investor in mind. Experience with Mandarin Oriental, Six Senses, Somerset.</p>
+    </div>
+    <div class="spec-card fade-in">
+      <div class="spec-num">03</div>
+      <div class="spec-icon">⬡</div>
+      <h3 class="spec-title pl">Design Management</h3>
+      <h3 class="spec-title en">Design Management</h3>
+      <p class="spec-desc pl">Projekt pod kontrolą. Koordynujemy wielobranżowe zespoły, pilnujemy budżetu i harmonogramu, tworzymy strukturę której inwestor potrzebuje. Certyfikaty IPMA i GPM-b.</p>
+      <p class="spec-desc en">Project under control. We coordinate multidisciplinary teams, manage budget and schedule, create the structure investors need. IPMA and GPM-b certified.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio-section" id="portfolio" style="background:#f0ece6">
+  <div class="portfolio-header">
+    <div>
+      <p class="section-label pl">Portfolio wybrane</p>
+      <p class="section-label en">Selected work</p>
+      <h2 class="section-title fade-in pl" style="margin-bottom:0">Zrealizowane<br><em>projekty</em></h2>
+      <h2 class="section-title fade-in en" style="margin-bottom:0">Completed<br><em>projects</em></h2>
+    </div>
+    <p style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray)" class="fade-in pl">2015 — 2025</p>
+    <p style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray)" class="fade-in en">2015 — 2025</p>
+  </div>
+
+  <div class="portfolio-grid">
+    <!-- CP HQ -->
+    <div class="portfolio-item fade-in">
+      <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80" alt="CP Headquarters">
+      <div class="portfolio-always">
+        <span class="portfolio-tag">Biuro · LEED Platinum · Wietnam</span>
+        <div class="portfolio-name">CP Headquarters</div>
+        <div class="portfolio-meta">Bien Hoa, Vietnam · 2019–2023 · mh architects</div>
+      </div>
+      <div class="portfolio-overlay">
+        <p class="portfolio-detail pl">Siedziba główna dla 500 pracowników z zielonym rdzeniem biegnącym przez wszystkie piętra. Główny architekt od koncepcji do budowy.</p>
+        <p class="portfolio-detail en">Headquarters for 500 employees with a green core running through all floors. Lead architect from concept to construction.</p>
+        <span class="portfolio-area">22 221 m²</span>
+      </div>
+    </div>
+    <!-- D1mension -->
+    <div class="portfolio-item fade-in">
+      <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80" alt="D1mension Ho Chi Minh">
+      <div class="portfolio-always">
+        <span class="portfolio-tag">Mieszkalno-hotelowy · Wietnam</span>
+        <div class="portfolio-name">D1mension</div>
+        <div class="portfolio-meta">Ho Chi Minh City · 2016–2018 · RSP Vietnam</div>
+      </div>
+      <div class="portfolio-overlay">
+        <p class="portfolio-detail pl">Pierwszy projekt mieszkaniowy z usługami concierge w Wietnamie. 200 apartamentów Somerset + 102 luksusowe jednostki. Główny architekt na etapie budowy.</p>
+        <p class="portfolio-detail en">First residential project with concierge services in Vietnam. 200 Somerset apartments + 102 luxury units. Lead architect during construction.</p>
+        <span class="portfolio-area">90 906 m²</span>
+      </div>
+    </div>
+    <!-- Fulbright -->
+    <div class="portfolio-item fade-in">
+      <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=900&q=80" alt="Fulbright University">
+      <div class="portfolio-always">
+        <span class="portfolio-tag">Edukacja · Wietnam</span>
+        <div class="portfolio-name">Fulbright University</div>
+        <div class="portfolio-meta">Ho Chi Minh City · 2018–2019 · mh architects + SHoP</div>
+      </div>
+      <div class="portfolio-overlay">
+        <p class="portfolio-detail pl">Kampus dla 8000+ studentów w&nbsp;kolaboracji z&nbsp;SHoP Architects (NYC). Lokalny architekt i koordynator BIM dla globalnego zespołu.</p>
+        <p class="portfolio-detail en">Campus for 8000+ students in collaboration with SHoP Architects (NYC). Local architect and BIM coordinator for a global team.</p>
+        <span class="portfolio-area">126 713 m²</span>
+      </div>
+    </div>
+    <!-- Nanee Hotel -->
+    <div class="portfolio-item fade-in">
+      <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=900&q=80" alt="Nanee Hotel Nepal">
+      <div class="portfolio-always">
+        <span class="portfolio-tag">Hotel butikowy · Nepal</span>
+        <div class="portfolio-name">Nanee Hotel</div>
+        <div class="portfolio-meta">Bhaktapur, Nepal · 2019–2023 · Epi[K]urean</div>
+      </div>
+      <div class="portfolio-overlay">
+        <p class="portfolio-detail pl">Butikowy hotel w sercu Doliny Katmandu, hołd dla dziedzictwa Newari. Koncepcja wnętrz, rooftop bar, wybór materiałów i OS&E.</p>
+        <p class="portfolio-detail en">Boutique hotel in the heart of Kathmandu Valley, a tribute to Newari heritage. Interior concept, rooftop bar, materials and OS&E selection.</p>
+        <span class="portfolio-area">1 025 m²</span>
+      </div>
+    </div>
+    <!-- Baligrod -->
+    <div class="portfolio-item fade-in" style="grid-column: 1 / -1; aspect-ratio: 16/6;">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80" alt="Punkt widokowy Baligród">
+      <div class="portfolio-always">
+        <span class="portfolio-tag">Przestrzeń publiczna · Polska</span>
+        <div class="portfolio-name pl">Punkt Widokowy — Baligród</div>
+        <div class="portfolio-name en">Viewpoint — Baligród</div>
+        <div class="portfolio-meta pl">Bieszczady, Polska · projekt autorski</div>
+        <div class="portfolio-meta en">Bieszczady, Poland · original design</div>
+      </div>
+      <div class="portfolio-overlay">
+        <p class="portfolio-detail pl">Projekt publicznego punktu widokowego w Bieszczadach. Lokalne materiały, minimalna ingerencja w krajobraz, maksymalna integracja z otoczeniem.</p>
+        <p class="portfolio-detail en">Public viewpoint in the Bieszczady mountains. Local materials, minimal landscape intervention, maximum integration with the surroundings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs-section">
+  <p class="section-label" style="color:var(--gold-light)" >Certyfikaty i uprawnienia</p>
+  <h2 class="section-title fade-in pl" style="color:white">Kwalifikacje które<br><em>robią różnicę</em></h2>
+  <h2 class="section-title fade-in en" style="color:white">Qualifications that<br><em>make a difference</em></h2>
+  <div class="certs-grid">
+    <div class="cert-item fade-in">
+      <span class="cert-icon">🏗</span>
+      <div class="cert-name">
+        <strong class="pl">Uprawnienia Architektoniczne</strong>
+        <strong class="en">Architectural Licence</strong>
+        <span class="pl">Bez ograniczeń — projektowanie i budowa</span>
+        <span class="en">Unlimited — design & construction</span>
+      </div>
+    </div>
+    <div class="cert-item fade-in">
+      <span class="cert-icon">🌱</span>
+      <div class="cert-name">
+        <strong>GPM-b</strong>
+        <span class="pl">Green Project Management</span>
+        <span class="en">Green Project Management</span>
+      </div>
+    </div>
+    <div class="cert-item fade-in">
+      <span class="cert-icon">🏠</span>
+      <div class="cert-name">
+        <strong>Baubiologie</strong>
+        <span class="pl">Biologia budowlana — środowisko wewnętrzne</span>
+        <span class="en">Building biology — indoor environment</span>
+      </div>
+    </div>
+    <div class="cert-item fade-in">
+      <span class="cert-icon">📋</span>
+      <div class="cert-name">
+        <strong>IPMA</strong>
+        <span class="pl">Zarządzanie projektami</span>
+        <span class="en">Project management</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners-section">
+  <p class="section-label pl">Wybrani partnerzy i klienci</p>
+  <p class="section-label en">Selected partners & clients</p>
+  <h2 class="section-title fade-in pl">Pracowaliśmy z<br><em>najlepszymi</em></h2>
+  <h2 class="section-title fade-in en">We have worked with<br><em>the best</em></h2>
+  <div class="partners-row fade-in">
+    <span class="partner-tag">Snøhetta</span>
+    <span class="partner-tag">SHoP Architects</span>
+    <span class="partner-tag">Buro Happold</span>
+    <span class="partner-tag">Arup</span>
+    <span class="partner-tag">Arcadis</span>
+    <span class="partner-tag">RSP Architects</span>
+    <span class="partner-tag">Skanska</span>
+    <span class="partner-tag">CapitaLand</span>
+    <span class="partner-tag">Mandarin Oriental</span>
+    <span class="partner-tag">Six Senses</span>
+    <span class="partner-tag">Kajima</span>
+    <span class="partner-tag">CP Group</span>
+    <span class="partner-tag">ASML</span>
+    <span class="partner-tag">Fullbright University</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="kontakt">
+  <p class="section-label pl">Kontakt</p>
+  <p class="section-label en">Contact</p>
+  <h2 class="section-title fade-in pl">Porozmawiajmy<br>o Twoim <em>projekcie</em></h2>
+  <h2 class="section-title fade-in en">Let's talk about<br>your <em>project</em></h2>
+
+  <div class="contact-layout">
+    <div class="contact-info fade-in">
+      <div class="contact-item">
+        <div class="contact-item-label">Email</div>
+        <div class="contact-item-value"><a href="mailto:info@mantastudio.eu">info@mantastudio.eu</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label pl">Siedziba</div>
+        <div class="contact-item-label en">Office</div>
+        <div class="contact-item-value" style="font-size:16px;font-family:var(--font-body);font-weight:300;color:var(--gray)">
+          Manta Studio sp. z o.o.<br>
+          ul. Józefa Piłsudskiego 17/4<br>
+          35-074 Rzeszów, Polska
+        </div>
+      </div>
+      <div class="divider"></div>
+      <p style="font-size:13px;color:var(--gray);line-height:1.7;max-width:360px" class="pl">
+        Każdy projekt zaczyna się od rozmowy. Napisz do nas — odpiszemy w ciągu 24 godzin.
+      </p>
+      <p style="font-size:13px;color:var(--gray);line-height:1.7;max-width:360px" class="en">
+        Every project starts with a conversation. Write to us — we'll respond within 24 hours.
+      </p>
+    </div>
+    <div class="contact-form fade-in">
+      <div class="form-group">
+        <label class="pl">Imię i nazwisko</label>
+        <label class="en">Full name</label>
+        <input type="text" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="pl">Typ projektu</label>
+        <label class="en">Project type</label>
+        <select>
+          <option value="" class="pl">— wybierz —</option>
+          <option value="" class="en">— select —</option>
+          <option class="pl">Hospitality / Hotel</option>
+          <option class="en">Hospitality / Hotel</option>
+          <option class="pl">Edukacja / Przestrzeń publiczna</option>
+          <option class="en">Education / Public space</option>
+          <option class="pl">Opieka / Zdrowie</option>
+          <option class="en">Care / Health</option>
+          <option class="pl">Biuro / Komercja</option>
+          <option class="en">Office / Commercial</option>
+          <option class="pl">Inny</option>
+          <option class="en">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="pl">Wiadomość</label>
+        <label class="en">Message</label>
+        <textarea placeholder=""></textarea>
+      </div>
+      <div class="form-submit">
+        <button class="btn-primary pl" style="border:none;cursor:pointer" onclick="handleSubmit()">Wyślij wiadomość</button>
+        <button class="btn-primary en" style="border:none;cursor:pointer" onclick="handleSubmit()">Send message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Manta Studio sp. z o.o.</span>
+  <a href="mailto:info@mantastudio.eu">info@mantastudio.eu</a>
+  <span style="font-size:10px;opacity:0.5">Architecture · Design Management · Sustainability</span>
+</footer>
+
+<script>
+  // Language switching
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.getElementById('btn-pl').classList.toggle('active', lang === 'pl');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  }
+
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Fade in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit() {
+    alert('Dziękujemy! Wiadomość wysłana. / Thank you! Message sent.');
+  }
+</script>
+</body>
+</html>
