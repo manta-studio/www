@@ -118,14 +118,13 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    padding-top: 88px;
   }
 
   .hero-left {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 80px 48px 80px 48px;
+    padding: 140px 48px 80px 48px;
   }
 
   .hero-eyebrow {
@@ -666,6 +665,127 @@
     margin: 24px 0;
   }
 
+  /* ── PROJECT MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .modal-overlay.open {
+    display: flex;
+    animation: modal-bg-in 0.3s ease;
+  }
+  @keyframes modal-bg-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal {
+    background: #111;
+    color: var(--white);
+    width: 100%;
+    max-width: 860px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modal-in 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(32px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-img {
+    width: 100%;
+    aspect-ratio: 16/7;
+    object-fit: cover;
+    display: block;
+    opacity: 0.8;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 40px; height: 40px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+    line-height: 1;
+  }
+  .modal-close:hover { background: var(--gold); border-color: var(--gold); }
+
+  .modal-body {
+    padding: 40px 48px 48px;
+  }
+
+  .modal-tag {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+  }
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .modal-meta {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+    margin-bottom: 28px;
+  }
+
+  .modal-divider {
+    width: 40px; height: 1px;
+    background: var(--gold);
+    margin-bottom: 28px;
+  }
+
+  .modal-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.85;
+    max-width: 620px;
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+
+  .modal-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .modal-stat-num {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .modal-stat-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-top: 4px;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     nav { padding: 20px 24px; }
@@ -869,63 +989,43 @@
 
   <div class="portfolio-grid">
     <!-- CP HQ -->
-    <div class="portfolio-item fade-in">
+    <div class="portfolio-item fade-in" onclick="openModal('cp')">
       <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80" alt="CP Headquarters">
       <div class="portfolio-always">
         <span class="portfolio-tag">Biuro · LEED Platinum · Wietnam</span>
         <div class="portfolio-name">CP Headquarters</div>
         <div class="portfolio-meta">Bien Hoa, Vietnam · 2019–2023 · mh architects</div>
       </div>
-      <div class="portfolio-overlay">
-        <p class="portfolio-detail pl">Siedziba główna dla 500 pracowników z zielonym rdzeniem biegnącym przez wszystkie piętra. Główny architekt od koncepcji do budowy.</p>
-        <p class="portfolio-detail en">Headquarters for 500 employees with a green core running through all floors. Lead architect from concept to construction.</p>
-        <span class="portfolio-area">22 221 m²</span>
-      </div>
     </div>
     <!-- D1mension -->
-    <div class="portfolio-item fade-in">
+    <div class="portfolio-item fade-in" onclick="openModal('d1')">
       <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80" alt="D1mension Ho Chi Minh">
       <div class="portfolio-always">
         <span class="portfolio-tag">Mieszkalno-hotelowy · Wietnam</span>
         <div class="portfolio-name">D1mension</div>
         <div class="portfolio-meta">Ho Chi Minh City · 2016–2018 · RSP Vietnam</div>
       </div>
-      <div class="portfolio-overlay">
-        <p class="portfolio-detail pl">Pierwszy projekt mieszkaniowy z usługami concierge w Wietnamie. 200 apartamentów Somerset + 102 luksusowe jednostki. Główny architekt na etapie budowy.</p>
-        <p class="portfolio-detail en">First residential project with concierge services in Vietnam. 200 Somerset apartments + 102 luxury units. Lead architect during construction.</p>
-        <span class="portfolio-area">90 906 m²</span>
-      </div>
     </div>
     <!-- Fulbright -->
-    <div class="portfolio-item fade-in">
+    <div class="portfolio-item fade-in" onclick="openModal('fulbright')">
       <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=900&q=80" alt="Fulbright University">
       <div class="portfolio-always">
         <span class="portfolio-tag">Edukacja · Wietnam</span>
         <div class="portfolio-name">Fulbright University</div>
         <div class="portfolio-meta">Ho Chi Minh City · 2018–2019 · mh architects + SHoP</div>
       </div>
-      <div class="portfolio-overlay">
-        <p class="portfolio-detail pl">Kampus dla 8000+ studentów w&nbsp;kolaboracji z&nbsp;SHoP Architects (NYC). Lokalny architekt i koordynator BIM dla globalnego zespołu.</p>
-        <p class="portfolio-detail en">Campus for 8000+ students in collaboration with SHoP Architects (NYC). Local architect and BIM coordinator for a global team.</p>
-        <span class="portfolio-area">126 713 m²</span>
-      </div>
     </div>
     <!-- Nanee Hotel -->
-    <div class="portfolio-item fade-in">
+    <div class="portfolio-item fade-in" onclick="openModal('nanee')">
       <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=900&q=80" alt="Nanee Hotel Nepal">
       <div class="portfolio-always">
         <span class="portfolio-tag">Hotel butikowy · Nepal</span>
         <div class="portfolio-name">Nanee Hotel</div>
         <div class="portfolio-meta">Bhaktapur, Nepal · 2019–2023 · Epi[K]urean</div>
       </div>
-      <div class="portfolio-overlay">
-        <p class="portfolio-detail pl">Butikowy hotel w sercu Doliny Katmandu, hołd dla dziedzictwa Newari. Koncepcja wnętrz, rooftop bar, wybór materiałów i OS&E.</p>
-        <p class="portfolio-detail en">Boutique hotel in the heart of Kathmandu Valley, a tribute to Newari heritage. Interior concept, rooftop bar, materials and OS&E selection.</p>
-        <span class="portfolio-area">1 025 m²</span>
-      </div>
     </div>
     <!-- Baligrod -->
-    <div class="portfolio-item fade-in" style="grid-column: 1 / -1; aspect-ratio: 16/6;">
+    <div class="portfolio-item fade-in" style="grid-column: 1 / -1; aspect-ratio: 16/6;" onclick="openModal('baligrod')">
       <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80" alt="Punkt widokowy Baligród">
       <div class="portfolio-always">
         <span class="portfolio-tag">Przestrzeń publiczna · Polska</span>
@@ -933,10 +1033,6 @@
         <div class="portfolio-name en">Viewpoint — Baligród</div>
         <div class="portfolio-meta pl">Bieszczady, Polska · projekt autorski</div>
         <div class="portfolio-meta en">Bieszczady, Poland · original design</div>
-      </div>
-      <div class="portfolio-overlay">
-        <p class="portfolio-detail pl">Projekt publicznego punktu widokowego w Bieszczadach. Lokalne materiały, minimalna ingerencja w krajobraz, maksymalna integracja z otoczeniem.</p>
-        <p class="portfolio-detail en">Public viewpoint in the Bieszczady mountains. Local materials, minimal landscape intervention, maximum integration with the surroundings.</p>
       </div>
     </div>
   </div>
@@ -1019,7 +1115,7 @@
     <div class="contact-info fade-in">
       <div class="contact-item">
         <div class="contact-item-label">Email</div>
-        <div class="contact-item-value"><a href="mailto:info@mantastudio.eu">info@mantastudio.eu</a></div>
+        <div class="contact-item-value"><a href="/cdn-cgi/l/email-protection#553c3b333a1538343b2134262120313c3a7b3020"><span class="__cf_email__" data-cfemail="d8b1b6beb798b5b9b6acb9abacadbcb1b7f6bdad">[email&#160;protected]</span></a></div>
       </div>
       <div class="contact-item">
         <div class="contact-item-label pl">Siedziba</div>
@@ -1086,21 +1182,147 @@
   <span style="font-size:10px;opacity:0.5">Architecture · Design Management · Sustainability</span>
 </footer>
 
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <img class="modal-img" id="modal-img" src="" alt="">
+    <div class="modal-body">
+      <div class="modal-tag" id="modal-tag"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-meta" id="modal-meta"></div>
+      <div class="modal-divider"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-stats" id="modal-stats"></div>
+    </div>
+  </div>
+</div>
+
+
 <script>
-  // Language switching
+  // ── PROJECT DATA ──
+  const projects = {
+    cp: {
+      img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80',
+      tag: { pl: 'Biuro · LEED Platinum · Wietnam', en: 'Office · LEED Platinum · Vietnam' },
+      title: 'CP Headquarters',
+      meta: 'Bien Hoa, Vietnam · 2019–2023 · mh architects',
+      desc: {
+        pl: 'Siedziba główna firmy CP to wysoce spersonalizowane biuro dla 500 pracowników. Koncepcja koncentruje się wokół zielonego rdzenia — platform otaczających budynek, wiodących przez wszystkie piętra. Tarasy zaprojektowane z myślą o wielofunkcyjnym wykorzystaniu, zarówno do pracy jak i wypoczynku.<br><br>Prowadziliśmy projekt od wczesnych początków przetargu, przez etapy projektowania, aż po nadzór budowlany — koordynacja z inżynierami, specjalistami i producentami, wizyty na budowie i sprawdzanie dokumentacji wykonawczej.',
+        en: 'CP Headquarters is a highly personalised office for 500 employees. The concept centres around a green core — platforms surrounding the building, running through all floors. Terraces designed for multi-functional use, both for work and relaxation.<br><br>We led the project from early tender stages through design phases to construction supervision — coordinating with engineers, specialists and manufacturers, site visits and reviewing execution documentation.'
+      },
+      stats: [
+        { num: '22 221', label: { pl: 'm² pow. całkowita', en: 'm² total area' } },
+        { num: '9', label: { pl: 'pięter', en: 'floors' } },
+        { num: 'LEED Platinum', label: { pl: 'certyfikat', en: 'certification' } }
+      ]
+    },
+    d1: {
+      img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=80',
+      tag: { pl: 'Mieszkalno-hotelowy · Wietnam', en: 'Residential-hotel · Vietnam' },
+      title: 'D1mension',
+      meta: 'Ho Chi Minh City, Vietnam · 2016–2018 · RSP Vietnam',
+      desc: {
+        pl: 'Kompleks dwóch wież mieszkalnych dla CapitaLand w centralnej dzielnicy HCMC. Dwie wieże oferują 200 apartamentów z obsługą hotelową Somerset i 102 luksusowe jednostki mieszkalne z basenem, klubem i centrum fitness.<br><br>Pierwszy projekt mieszkaniowy w Wietnamie oferujący usługi concierge. Przebudowa i renowacja istniejącej konstrukcji żelbetowej — kontrola jakości, koordynacja na budowie, kontrola kosztów i postępu prac.',
+        en: 'A complex of two residential towers for CapitaLand in central HCMC. Two towers offer 200 Somerset serviced apartments and 102 luxury residential units with pool, club and fitness centre.<br><br>The first residential project in Vietnam offering concierge services. Renovation of an existing reinforced concrete structure — quality control, site coordination, cost and progress monitoring.'
+      },
+      stats: [
+        { num: '90 906', label: { pl: 'm² pow. całkowita', en: 'm² total area' } },
+        { num: '21', label: { pl: 'pięter', en: 'floors' } },
+        { num: '302', label: { pl: 'jednostek', en: 'units' } }
+      ]
+    },
+    fulbright: {
+      img: 'https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80',
+      tag: { pl: 'Kampus · Edukacja · Wietnam', en: 'Campus · Education · Vietnam' },
+      title: 'Fulbright University',
+      meta: 'Ho Chi Minh City, Vietnam · 2018–2019 · mh architects + SHoP Architects',
+      desc: {
+        pl: 'Projekt nowego kampusu we współpracy z SHoP Architects (Nowy Jork). Mocno zainspirowany lokalnym kontekstem — terakota, dachy pokryte gontem, naturalna wentylacja. Centralny skwer tworzy wrażenie tętniącego życiem sąsiedztwa.<br><br>Koordynacja z projektantami konstrukcji, instalacji i krajobrazu. Zarządzaliśmy złożonym modelem Revit jako kluczowym narzędziem koordynacji z globalnymi konsultantami. Zespół 3–4 kreślarzy — kontrola jakości i zgodności z przepisami.',
+        en: 'New campus design in collaboration with SHoP Architects (New York). Strongly inspired by local Vietnamese context — terracotta, shingle roofs, natural ventilation. A central square creates the feel of a vibrant neighbourhood.<br><br>Coordinating structural, MEP and landscape designers. We managed a complex Revit model as the key coordination tool with global consultants. Team of 3–4 drafters — quality control and compliance.'
+      },
+      stats: [
+        { num: '126 713', label: { pl: 'm² pow. całkowita', en: 'm² total area' } },
+        { num: '8 000+', label: { pl: 'studentów', en: 'students' } },
+        { num: '4–9', label: { pl: 'pięter', en: 'floors' } }
+      ]
+    },
+    nanee: {
+      img: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1600&q=80',
+      tag: { pl: 'Hotel butikowy · Nepal', en: 'Boutique hotel · Nepal' },
+      title: 'Nanee Hotel',
+      meta: 'Bhaktapur, Nepal · 2019–2023 · Epi[K]urean',
+      desc: {
+        pl: 'Hotel butikowy w duchowym sercu Doliny Katmandu. "Nanee" to słowo Newari oznaczające "dziedziniec" — centralny element hotelu. Projekt minimalistyczny, z powiązaniami z tradycją i historią Bhaktapur widoczną w architekturze.<br><br>Koncepcja użytkowa i projekt architektury wnętrz przestrzeni publicznych — recepcja, rooftop bar, mini-teatr, brasserie. Dobór materiałów, dekoracji i wyposażenia operacyjnego (OS&E). Koordynacja z operatorem hotelu.',
+        en: 'Boutique hotel in the spiritual heart of Kathmandu Valley. "Nanee" means "courtyard" in Newari — the central element of the hotel. A minimalist project with connections to the tradition and history of Bhaktapur.<br><br>Functional concept and interior architecture of public spaces — reception, rooftop bar, mini-theatre, brasserie. Materials, décor and OS&E selection. Coordination with the hotel operator.'
+      },
+      stats: [
+        { num: '1 025', label: { pl: 'm² pow. całkowita', en: 'm² total area' } },
+        { num: '18', label: { pl: 'jednostek', en: 'units' } },
+        { num: '5', label: { pl: 'pięter', en: 'floors' } }
+      ]
+    },
+    baligrod: {
+      img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80',
+      tag: { pl: 'Przestrzeń publiczna · Polska', en: 'Public space · Poland' },
+      title: { pl: 'Punkt Widokowy — Baligród', en: 'Viewpoint — Baligród' },
+      meta: { pl: 'Bieszczady, Polska · projekt autorski Manta Studio', en: 'Bieszczady, Poland · original design by Manta Studio' },
+      desc: {
+        pl: 'Pierwszy projekt autorski Manta Studio realizowany w Polsce. Filozofia projektowa opiera się na minimalnej ingerencji w krajobraz przy maksymalnej integracji z otoczeniem.<br><br>Lokalne materiały, naturalne formy, głęboki szacunek dla miejsca i jego charakteru. Projekt który pokazuje nasze podejście do architektury zrównoważonej w polskim kontekście.',
+        en: 'Manta Studio\'s first original project in Poland. The design philosophy is based on minimal landscape intervention with maximum integration with the surroundings.<br><br>Local materials, natural forms, deep respect for the place and its character. A project that demonstrates our approach to sustainable architecture in the Polish context.'
+      },
+      stats: []
+    }
+  };
+
+  // ── MODAL ──
+  function getLang() {
+    return document.body.classList.contains('lang-en') ? 'en' : 'pl';
+  }
+
+  function openModal(id) {
+    const p = projects[id];
+    const l = getLang();
+    document.getElementById('modal-img').src = p.img;
+    document.getElementById('modal-tag').textContent = p.tag[l] || p.tag;
+    document.getElementById('modal-title').textContent = typeof p.title === 'object' ? p.title[l] : p.title;
+    document.getElementById('modal-meta').textContent = typeof p.meta === 'object' ? p.meta[l] : p.meta;
+    document.getElementById('modal-desc').innerHTML = p.desc[l];
+    const statsEl = document.getElementById('modal-stats');
+    statsEl.innerHTML = p.stats.map(s => `
+      <div>
+        <div class="modal-stat-num">${s.num}</div>
+        <div class="modal-stat-label">${s.label[l]}</div>
+      </div>`).join('');
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ── LANGUAGE ──
   function setLang(lang) {
     document.body.className = 'lang-' + lang;
     document.getElementById('btn-pl').classList.toggle('active', lang === 'pl');
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
   }
 
-  // Nav scroll effect
+  // ── NAV SCROLL ──
   const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  // Fade in on scroll
+  // ── FADE IN ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
@@ -1109,12 +1331,11 @@
       }
     });
   }, { threshold: 0.1 });
-
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // Form submit
+  // ── FORM ──
   function handleSubmit() {
-    alert('Dziękujemy! Wiadomość wysłana. / Thank you! Message sent.');
+    alert('Dziękujemy! Wiadomość wysłana.\nThank you! Message sent.');
   }
 </script>
 </body>
