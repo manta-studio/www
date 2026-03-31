@@ -78,12 +78,6 @@ section{padding:100px 48px}
 .map-country{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.6);letter-spacing:.05em}
 .map-country-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
 .map-wrap{position:relative;width:100%}
-.map-wrap img{width:100%;display:block;opacity:.22;filter:invert(1) brightness(1.8) contrast(1.2)}
-.map-pins-layer{position:absolute;top:0;left:0;width:100%;height:100%}
-.map-pin{position:absolute;transform:translate(-50%,-50%)}
-.map-pin-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);position:relative}
-.map-pin-dot::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;border:1px solid var(--gold);opacity:.4;animation:pulse 2s infinite}
-@keyframes pulse{0%{transform:translate(-50%,-50%) scale(1);opacity:.4}100%{transform:translate(-50%,-50%) scale(2.2);opacity:0}}
 .map-pin-label{position:absolute;left:14px;top:-3px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);white-space:nowrap}
 
 /* SPECS */
@@ -148,11 +142,11 @@ footer a{color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
 footer a:hover{color:var(--gold)}
 
 /* CAROUSEL */
-.carousel{position:relative;width:100%;overflow:hidden;background:#000;user-select:none}
+.carousel{position:relative;width:100%;background:#000;user-select:none}
 .carousel-track{display:flex;transition:transform .42s cubic-bezier(.4,0,.2,1)}
-.carousel-slide{min-width:100%;aspect-ratio:16/7;position:relative;flex-shrink:0}
-.carousel-slide img{width:100%;height:100%;object-fit:cover;display:block;opacity:.88}
-.carousel-slide-label{position:absolute;bottom:14px;left:20px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.carousel-slide{min-width:100%;position:relative;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#000;max-height:60vh}
+.carousel-slide img{max-width:100%;max-height:60vh;width:auto;height:auto;object-fit:contain;display:block;opacity:.92}
+.carousel-slide-label{position:absolute;bottom:10px;left:16px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4)}
 .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:background .2s,border-color .2s;line-height:1;font-family:var(--font-body)}
 .carousel-btn:hover{background:var(--gold);border-color:var(--gold)}
 .carousel-prev{left:12px}
@@ -289,52 +283,116 @@ footer a:hover{color:var(--gold)}
       <div class="map-country"><span class="map-country-dot"></span>Polska / Poland</div>
     </div>
     <div class="map-wrap fade-in">
-      <!-- Natural Earth equirectangular world map — Wikipedia Commons, public domain -->
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1920px-World_map_-_low_resolution.svg.png"
-        alt="World map"
-      >
-      <!-- Pins: equirectangular projection
-           x = (lon + 180) / 360 * 100%
-           y = (90 - lat) / 180 * 100%  -->
-      <div class="map-pins-layer">
-        <!-- Poland 52°N 20°E → x=55.6% y=21.1% -->
-        <div class="map-pin" style="left:55.6%;top:21.1%">
-          <div class="map-pin-dot"></div>
-          <div class="map-pin-label">PL</div>
-        </div>
-        <!-- Germany 51°N 10°E → x=52.8% y=21.7% -->
-        <div class="map-pin" style="left:52.8%;top:21.7%">
-          <div class="map-pin-dot"></div>
-        </div>
-        <!-- Saudi Arabia 24°N 45°E → x=62.5% y=36.7% -->
-        <div class="map-pin" style="left:62.5%;top:36.7%">
-          <div class="map-pin-dot"></div>
-          <div class="map-pin-label">KSA</div>
-        </div>
-        <!-- Nepal 28°N 84°E → x=73.3% y=34.4% -->
-        <div class="map-pin" style="left:73.3%;top:34.4%">
-          <div class="map-pin-dot"></div>
-        </div>
-        <!-- Thailand 15°N 101°E → x=78.1% y=41.7% -->
-        <div class="map-pin" style="left:78.1%;top:41.7%">
-          <div class="map-pin-dot"></div>
-        </div>
-        <!-- Vietnam 16°N 108°E → x=80% y=41.1% -->
-        <div class="map-pin" style="left:80%;top:41.1%">
-          <div class="map-pin-dot"></div>
-          <div class="map-pin-label">VN</div>
-        </div>
-        <!-- Cambodia 12°N 105°E → x=79.2% y=43.3% -->
-        <div class="map-pin" style="left:79.2%;top:43.3%">
-          <div class="map-pin-dot"></div>
-        </div>
-        <!-- Belize 17°N 88°W → x=25.6% y=40.6% -->
-        <div class="map-pin" style="left:25.6%;top:40.6%">
-          <div class="map-pin-dot"></div>
-          <div class="map-pin-label">BZ</div>
-        </div>
-      </div>
+      <!-- Inline SVG world map — equirectangular, viewBox 0 0 1000 500
+           Pin formula: x=(lon+180)/360*1000  y=(90-lat)/180*500 -->
+      <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
+        <rect width="1000" height="500" fill="#0d0d0d"/>
+
+        <!-- CONTINENTS — simplified outlines, low opacity -->
+        <g fill="#2a2a2a" stroke="#3a3a3a" stroke-width="0.5">
+          <!-- North America -->
+          <path d="M70,80 L180,70 L220,100 L230,140 L210,180 L190,220 L160,260 L130,280 L100,260 L80,220 L60,180 L50,140 Z"/>
+          <path d="M130,280 L170,310 L180,340 L160,360 L140,350 L120,320 Z"/>
+          <!-- South America -->
+          <path d="M170,290 L220,280 L250,300 L260,340 L250,390 L230,430 L200,450 L175,430 L160,390 L155,340 Z"/>
+          <!-- Europe -->
+          <path d="M440,60 L520,55 L540,80 L530,110 L500,120 L470,115 L450,100 L435,80 Z"/>
+          <path d="M470,115 L510,120 L520,140 L500,155 L475,150 L460,135 Z"/>
+          <!-- Africa -->
+          <path d="M450,160 L530,155 L560,190 L565,240 L550,300 L520,350 L490,370 L460,350 L440,300 L430,240 L435,190 Z"/>
+          <!-- Russia / N Asia -->
+          <path d="M520,50 L700,40 L780,60 L800,90 L750,110 L680,115 L600,110 L540,100 L520,80 Z"/>
+          <!-- Middle East -->
+          <path d="M535,140 L600,135 L620,160 L610,190 L580,200 L550,190 L535,170 Z"/>
+          <!-- South Asia -->
+          <path d="M600,140 L680,135 L700,165 L690,200 L660,220 L630,215 L608,195 L600,165 Z"/>
+          <!-- SE Asia -->
+          <path d="M680,170 L740,165 L760,185 L750,215 L720,230 L695,220 L678,200 Z"/>
+          <path d="M740,200 L770,195 L775,220 L755,230 L738,218 Z"/>
+          <!-- Australia -->
+          <path d="M720,300 L820,290 L850,320 L845,370 L810,400 L760,405 L720,380 L700,340 L710,310 Z"/>
+          <!-- Japan / Korea area -->
+          <path d="M800,110 L830,105 L840,125 L825,135 L808,128 Z"/>
+          <!-- UK / Ireland -->
+          <path d="M432,68 L445,65 L448,80 L438,84 L430,76 Z"/>
+          <!-- Scandinavia -->
+          <path d="M480,40 L520,35 L525,60 L510,70 L490,65 L478,52 Z"/>
+        </g>
+
+        <!-- HIGHLIGHTED COUNTRIES — gold tint -->
+        <g fill="rgba(201,151,58,0.25)" stroke="rgba(201,151,58,0.5)" stroke-width="0.8">
+          <!-- Poland ~52°N 20°E -->
+          <ellipse cx="555" cy="211" rx="14" ry="10"/>
+          <!-- Germany ~51°N 10°E -->
+          <ellipse cx="528" cy="214" rx="16" ry="11"/>
+          <!-- Saudi Arabia ~24°N 45°E -->
+          <ellipse cx="625" cy="258" rx="22" ry="15"/>
+          <!-- Nepal ~28°N 84°E -->
+          <ellipse cx="733" cy="247" rx="12" ry="7"/>
+          <!-- Thailand ~15°N 101°E -->
+          <ellipse cx="781" cy="292" rx="10" ry="13"/>
+          <!-- Vietnam ~16°N 108°E -->
+          <ellipse cx="800" cy="289" rx="8" ry="16"/>
+          <!-- Cambodia ~12°N 105°E -->
+          <ellipse cx="792" cy="300" rx="9" ry="8"/>
+          <!-- Belize ~17°N 88°W -->
+          <ellipse cx="256" cy="287" rx="6" ry="6"/>
+        </g>
+
+        <!-- PINS — gold dots with pulse rings -->
+        <!-- Poland 52°N 20°E: x=(20+180)/360*1000=556, y=(90-52)/180*500=106 -->
+        <g class="map-svg-pin">
+          <circle cx="556" cy="211" r="14" fill="none" stroke="rgba(201,151,58,0.25)" stroke-width="1">
+            <animate attributeName="r" from="8" to="18" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" from="0.5" to="0" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="556" cy="211" r="4" fill="#c9973a"/>
+          <text x="564" y="207" fill="rgba(255,255,255,0.55)" font-size="9" font-family="sans-serif" letter-spacing="1">PL</text>
+        </g>
+        <!-- Germany 51°N 10°E: x=528, y=108 -->
+        <g class="map-svg-pin">
+          <circle cx="528" cy="214" r="14" fill="none" stroke="rgba(201,151,58,0.2)" stroke-width="1">
+            <animate attributeName="r" from="8" to="18" dur="2.3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" from="0.5" to="0" dur="2.3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="528" cy="214" r="4" fill="#c9973a"/>
+        </g>
+        <!-- Saudi Arabia 24°N 45°E: x=625, y=183 -->
+        <g class="map-svg-pin">
+          <circle cx="625" cy="258" r="14" fill="none" stroke="rgba(201,151,58,0.2)" stroke-width="1">
+            <animate attributeName="r" from="8" to="18" dur="1.8s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" from="0.5" to="0" dur="1.8s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="625" cy="258" r="4" fill="#c9973a"/>
+          <text x="633" y="254" fill="rgba(255,255,255,0.55)" font-size="9" font-family="sans-serif" letter-spacing="1">KSA</text>
+        </g>
+        <!-- Nepal 28°N 84°E: x=733, y=172 -->
+        <g class="map-svg-pin">
+          <circle cx="733" cy="247" r="4" fill="#c9973a"/>
+        </g>
+        <!-- Thailand 15°N 101°E: x=781, y=208 -->
+        <g class="map-svg-pin">
+          <circle cx="781" cy="292" r="4" fill="#c9973a"/>
+        </g>
+        <!-- Vietnam 16°N 108°E: x=800, y=206 -->
+        <g class="map-svg-pin">
+          <circle cx="800" cy="289" r="14" fill="none" stroke="rgba(201,151,58,0.2)" stroke-width="1">
+            <animate attributeName="r" from="8" to="18" dur="2.1s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" from="0.5" to="0" dur="2.1s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="800" cy="289" r="4" fill="#c9973a"/>
+          <text x="808" y="285" fill="rgba(255,255,255,0.55)" font-size="9" font-family="sans-serif" letter-spacing="1">VN</text>
+        </g>
+        <!-- Cambodia 12°N 105°E: x=792, y=217 -->
+        <g class="map-svg-pin">
+          <circle cx="792" cy="300" r="3.5" fill="#c9973a"/>
+        </g>
+        <!-- Belize 17°N 88°W: x=(−88+180)/360*1000=256, y=(90-17)/180*500=203 -->
+        <g class="map-svg-pin">
+          <circle cx="256" cy="287" r="4" fill="#c9973a"/>
+          <text x="264" y="283" fill="rgba(255,255,255,0.55)" font-size="9" font-family="sans-serif" letter-spacing="1">BZ</text>
+        </g>
+      </svg>
     </div>
   </div>
 </section>
@@ -464,7 +522,7 @@ footer a:hover{color:var(--gold)}
     <div class="contact-info fade-in">
       <div class="contact-item">
         <div class="contact-item-label">Email</div>
-        <div class="contact-item-value"><a href="mailto:info@mantastudio.eu">info@mantastudio.eu</a></div>
+        <div class="contact-item-value"><a href="/cdn-cgi/l/email-protection#452c2b232a0528242b3124363130212c2a6b2030"><span class="__cf_email__" data-cfemail="70191e161f301d111e041103040514191f5e1505">[email&#160;protected]</span></a></div>
       </div>
       <div class="contact-item">
         <div class="contact-item-label pl">Siedziba</div>
@@ -498,7 +556,7 @@ footer a:hover{color:var(--gold)}
 <!-- FOOTER -->
 <footer>
   <span>© 2025 Manta Studio sp. z o.o.</span>
-  <a href="mailto:info@mantastudio.eu">info@mantastudio.eu</a>
+  <a href="/cdn-cgi/l/email-protection#7a13141c153a171b140e1b090e0f1e1315541f0f"><span class="__cf_email__" data-cfemail="3e575058517e535f504a5f4d4a4b5a5751105b4b">[email&#160;protected]</span></a>
   <span style="font-size:10px;opacity:.5">Architecture · Design Management · Sustainability</span>
 </footer>
 
@@ -523,7 +581,7 @@ footer a:hover{color:var(--gold)}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const projects = {
   cp: {
     imgs:[
@@ -667,15 +725,4 @@ const nav=document.getElementById('main-nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
 
 // FADE IN
-const obs=new IntersectionObserver((entries)=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target)}
-  });
-},{threshold:.1});
-document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
-
-// FORM
-function handleSubmit(){alert('Dziękujemy! Wiadomość wysłana.\nThank you! Message sent.')}
-</script>
-</body>
-</html>
+const obs=new Intersectio
