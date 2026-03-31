@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manta Studio — Architektura & Design Management</title>
 <meta name="description" content="Pracownia architektoniczna specjalizująca się w zrównoważonym projektowaniu, architekturze wypoczynku i zarządzaniu projektami.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -68,14 +69,18 @@ section{padding:96px 48px}
 .map-sec .slabel{color:var(--gold-light)}
 .map-sec .stitle{color:var(--white)}
 .map-sec .sdesc{color:rgba(255,255,255,.5)}
-.map-layout{display:grid;grid-template-columns:200px 1fr;gap:60px;align-items:center;margin-top:52px}
-.map-countries{display:flex;flex-direction:column;gap:10px}
+.map-layout{display:grid;grid-template-columns:200px 1fr;gap:60px;align-items:start;margin-top:52px}
+.map-countries{display:flex;flex-direction:column;gap:10px;padding-top:8px}
 .mc{display:flex;align-items:center;gap:9px;font-size:12px;color:rgba(255,255,255,.55);letter-spacing:.04em}
 .mc-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
 
-/* MAP SVG */
-.map-svg-wrap{width:100%;position:relative}
-.map-svg-wrap svg{width:100%;height:auto;display:block}
+/* LEAFLET MAP */
+#worldmap{width:100%;height:340px;border-radius:0;background:#111}
+.leaflet-container{background:#111 !important}
+.map-pin-popup .leaflet-popup-content-wrapper{background:#1a1a1a;border:1px solid rgba(201,151,58,.4);border-radius:0;box-shadow:none;padding:0}
+.map-pin-popup .leaflet-popup-content{margin:8px 14px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.map-pin-popup .leaflet-popup-tip-container{display:none}
+.map-pin-popup .leaflet-popup-close-button{color:rgba(255,255,255,.4) !important;font-size:14px !important;top:4px !important;right:6px !important}
 
 /* SPECS */
 .specs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-light);margin-top:56px;border:1px solid var(--gray-light)}
@@ -168,6 +173,9 @@ footer a:hover{color:var(--gold)}
 .m-stats{display:flex;gap:36px;flex-wrap:wrap}
 .m-sn{font-family:var(--fd);font-size:26px;font-weight:300;color:var(--gold-light);line-height:1}
 .m-sl{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:3px}
+
+.map-tooltip{background:#1a1a1a !important;border:1px solid rgba(201,151,58,.45) !important;border-radius:0 !important;box-shadow:none !important;color:rgba(255,255,255,.75) !important;font-family:'DM Sans',sans-serif !important;font-size:10px !important;letter-spacing:.12em !important;text-transform:uppercase !important;padding:5px 10px !important}
+.map-tooltip::before{display:none !important}
 
 /* FADE */
 .fi{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
@@ -270,179 +278,8 @@ footer a:hover{color:var(--gold)}
       <div class="mc"><span class="mc-dot"></span>Belize</div>
       <div class="mc"><span class="mc-dot"></span>Polska / Poland</div>
     </div>
-    <div class="map-svg-wrap fi">
-      <!--
-        Equirectangular projection, viewBox="0 0 1000 500"
-        x = (lon + 180) / 360 * 1000
-        y = (90 - lat) / 180 * 500
 
-        Country highlights and pins calculated from real coordinates.
-        Continent outlines from Natural Earth simplified paths.
-      -->
-      <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
-        <rect width="1000" height="500" fill="#111"/>
-
-        <!-- Ocean grid lines (subtle) -->
-        <g stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none">
-          <line x1="0" y1="167" x2="1000" y2="167"/><!-- 30°N -->
-          <line x1="0" y1="222" x2="1000" y2="222"/><!-- 10°N -->
-          <line x1="0" y1="250" x2="1000" y2="250"/><!-- equator -->
-          <line x1="0" y1="278" x2="1000" y2="278"/><!-- 10°S -->
-          <line x1="500" y1="0" x2="500" y2="500"/><!-- 0° lon -->
-        </g>
-
-        <!-- CONTINENT LAND MASSES — simplified Natural Earth style -->
-        <g fill="#252525" stroke="#2e2e2e" stroke-width="0.8" stroke-linejoin="round">
-
-          <!-- North America -->
-          <path d="M120,60 L185,55 L220,75 L235,110 L245,145 L230,175 L210,195 L195,230
-                   L175,255 L155,275 L140,265 L125,240 L110,210 L95,185 L85,155 L80,120
-                   L95,90 Z"/>
-          <!-- Greenland -->
-          <path d="M195,25 L235,20 L255,35 L250,55 L225,60 L200,50 Z"/>
-          <!-- Central America -->
-          <path d="M155,275 L175,270 L190,285 L185,300 L165,295 Z"/>
-          <!-- Caribbean -->
-          <path d="M195,260 L210,255 L215,265 L205,270 Z"/>
-          <path d="M218,262 L230,258 L234,267 L222,270 Z"/>
-
-          <!-- South America -->
-          <path d="M165,295 L205,285 L240,295 L265,315 L275,350 L270,395 L255,435
-                   L230,455 L200,455 L175,430 L158,395 L150,355 L153,318 Z"/>
-
-          <!-- Europe -->
-          <path d="M440,55 L490,50 L520,58 L535,75 L530,98 L515,108 L495,115
-                   L475,118 L455,110 L445,95 L438,75 Z"/>
-          <!-- UK -->
-          <path d="M432,68 L446,63 L450,78 L440,85 L430,78 Z"/>
-          <!-- Scandinavia -->
-          <path d="M485,35 L520,30 L530,48 L522,65 L505,68 L488,60 Z"/>
-          <!-- Iberia -->
-          <path d="M438,100 L465,95 L472,112 L460,125 L442,120 Z"/>
-          <!-- Italy -->
-          <path d="M487,100 L502,95 L508,115 L498,128 L486,118 Z"/>
-          <!-- Balkans -->
-          <path d="M510,95 L535,90 L542,108 L530,120 L512,115 Z"/>
-
-          <!-- Africa -->
-          <path d="M445,152 L530,148 L565,168 L578,205 L580,250 L568,305 L545,355
-                   L515,378 L485,382 L458,360 L438,315 L430,265 L432,210 L440,175 Z"/>
-          <!-- Madagascar -->
-          <path d="M575,305 L585,298 L592,320 L585,338 L572,330 Z"/>
-
-          <!-- Russia / N Asia -->
-          <path d="M535,35 L640,28 L730,32 L810,40 L850,55 L840,80 L800,88
-                   L740,92 L680,88 L620,90 L570,85 L540,72 L532,52 Z"/>
-
-          <!-- Middle East -->
-          <path d="M535,128 L590,122 L618,138 L625,162 L615,185 L592,195
-                   L565,192 L545,175 L535,155 Z"/>
-
-          <!-- Central / South Asia -->
-          <path d="M595,115 L680,108 L720,120 L738,145 L730,175 L710,195
-                   L685,205 L658,200 L635,185 L615,165 L605,142 Z"/>
-          <!-- Indian subcontinent -->
-          <path d="M635,185 L685,180 L705,200 L700,240 L680,265 L655,270
-                   L635,250 L625,222 L628,198 Z"/>
-          <!-- Sri Lanka -->
-          <path d="M672,272 L680,268 L682,280 L673,283 Z"/>
-
-          <!-- SE Asia mainland -->
-          <path d="M710,165 L758,160 L778,175 L782,205 L770,230 L748,245
-                   L720,240 L705,218 L708,190 Z"/>
-          <!-- Vietnam / Cambodia / Thailand coast -->
-          <path d="M758,190 L788,182 L805,195 L808,222 L798,245 L778,252
-                   L762,238 L755,215 Z"/>
-
-          <!-- Indonesia / Malaysia (simplified) -->
-          <path d="M762,275 L800,268 L825,278 L822,295 L800,300 L768,292 Z"/>
-          <path d="M810,280 L845,272 L858,285 L850,298 L818,295 Z"/>
-          <path d="M755,292 L782,285 L788,300 L770,308 Z"/>
-
-          <!-- Japan -->
-          <path d="M808,102 L832,95 L842,110 L832,125 L812,120 Z"/>
-          <!-- Korea -->
-          <path d="M788,112 L808,108 L812,125 L800,132 L785,125 Z"/>
-
-          <!-- China / E Asia -->
-          <path d="M680,88 L790,82 L815,100 L812,130 L788,148 L750,158
-                   L710,162 L680,150 L658,128 L652,105 L665,92 Z"/>
-
-          <!-- Australia -->
-          <path d="M728,312 L820,302 L858,318 L865,360 L848,402 L810,420
-                   L762,422 L722,400 L705,362 L708,328 Z"/>
-          <!-- New Zealand -->
-          <path d="M870,378 L882,370 L888,390 L878,405 L866,395 Z"/>
-          <path d="M876,408 L888,402 L892,418 L880,425 L872,415 Z"/>
-
-          <!-- Antarctica (partial) -->
-          <path d="M0,475 L200,470 L400,472 L600,468 L800,470 L1000,472 L1000,500 L0,500 Z"/>
-        </g>
-
-        <!-- HIGHLIGHTED COUNTRIES — gold glow -->
-        <!-- Poland: 52°N 20°E → cx=556 cy=211 -->
-        <ellipse cx="556" cy="211" rx="13" ry="9" fill="rgba(201,151,58,0.3)" stroke="rgba(201,151,58,0.6)" stroke-width="1"/>
-        <!-- Germany: 51°N 10°E → cx=528 cy=214 -->
-        <ellipse cx="528" cy="214" rx="15" ry="10" fill="rgba(201,151,58,0.25)" stroke="rgba(201,151,58,0.5)" stroke-width="1"/>
-        <!-- Saudi Arabia: 24°N 45°E → cx=625 cy=183 -->
-        <ellipse cx="625" cy="183" rx="24" ry="16" fill="rgba(201,151,58,0.25)" stroke="rgba(201,151,58,0.5)" stroke-width="1"/>
-        <!-- Nepal: 28°N 84°E → cx=733 cy=172 -->
-        <ellipse cx="733" cy="172" rx="10" ry="7" fill="rgba(201,151,58,0.3)" stroke="rgba(201,151,58,0.6)" stroke-width="1"/>
-        <!-- Thailand: 15°N 101°E → cx=781 cy=208 -->
-        <ellipse cx="765" cy="198" rx="14" ry="18" fill="rgba(201,151,58,0.25)" stroke="rgba(201,151,58,0.5)" stroke-width="1"/>
-        <!-- Vietnam: 16°N 108°E → cx=800 cy=206 -->
-        <ellipse cx="792" cy="208" rx="10" ry="19" fill="rgba(201,151,58,0.3)" stroke="rgba(201,151,58,0.6)" stroke-width="1"/>
-        <!-- Cambodia: 12°N 105°E → cx=792 cy=217 -->
-        <!-- Belize: 17°N 88°W → cx=256 cy=203 -->
-        <ellipse cx="256" cy="203" rx="7" ry="7" fill="rgba(201,151,58,0.3)" stroke="rgba(201,151,58,0.6)" stroke-width="1"/>
-
-        <!-- ANIMATED PINS -->
-        <!-- Poland -->
-        <g>
-          <circle cx="556" cy="211" r="5" fill="none" stroke="#c9973a" stroke-width="1" opacity="0">
-            <animate attributeName="r" values="5;16" dur="2s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0.7;0" dur="2s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="556" cy="211" r="4" fill="#c9973a"/>
-          <text x="563" y="208" fill="rgba(255,255,255,0.6)" font-size="8" font-family="sans-serif" letter-spacing="1">PL</text>
-        </g>
-        <!-- Germany -->
-        <g>
-          <circle cx="528" cy="214" r="5" fill="none" stroke="#c9973a" stroke-width="1" opacity="0">
-            <animate attributeName="r" values="5;16" dur="2.4s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0.7;0" dur="2.4s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="528" cy="214" r="4" fill="#c9973a"/>
-        </g>
-        <!-- Saudi Arabia -->
-        <g>
-          <circle cx="625" cy="183" r="5" fill="none" stroke="#c9973a" stroke-width="1" opacity="0">
-            <animate attributeName="r" values="5;16" dur="1.9s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0.7;0" dur="1.9s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="625" cy="183" r="4" fill="#c9973a"/>
-          <text x="633" y="180" fill="rgba(255,255,255,0.6)" font-size="8" font-family="sans-serif" letter-spacing="1">KSA</text>
-        </g>
-        <!-- Nepal -->
-        <circle cx="733" cy="172" r="4" fill="#c9973a"/>
-        <!-- Thailand -->
-        <circle cx="765" cy="205" r="4" fill="#c9973a"/>
-        <!-- Vietnam -->
-        <g>
-          <circle cx="793" cy="205" r="5" fill="none" stroke="#c9973a" stroke-width="1" opacity="0">
-            <animate attributeName="r" values="5;16" dur="2.2s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0.7;0" dur="2.2s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="793" cy="205" r="4" fill="#c9973a"/>
-          <text x="800" y="202" fill="rgba(255,255,255,0.6)" font-size="8" font-family="sans-serif" letter-spacing="1">VN</text>
-        </g>
-        <!-- Cambodia -->
-        <circle cx="792" cy="220" r="3.5" fill="#c9973a"/>
-        <!-- Belize -->
-        <circle cx="256" cy="203" r="4" fill="#c9973a"/>
-        <text x="264" y="200" fill="rgba(255,255,255,0.6)" font-size="8" font-family="sans-serif" letter-spacing="1">BZ</text>
-      </svg>
-    </div>
+    <div id="worldmap" class="fi"></div>
   </div>
 </section>
 
@@ -574,7 +411,7 @@ footer a:hover{color:var(--gold)}
   <h2 class="stitle fi en">Let's talk about<br>your <em>project</em></h2>
   <div class="contact-layout">
     <div class="fi">
-      <div class="ci"><div class="ci-l">Email</div><div class="ci-v"><a href="mailto:info@mantastudio.eu">info@mantastudio.eu</a></div></div>
+      <div class="ci"><div class="ci-l">Email</div><div class="ci-v"><a href="/cdn-cgi/l/email-protection#6d04030b022d000c03190c1e1918090402430818"><span class="__cf_email__" data-cfemail="3f565159507f525e514b5e4c4b4a5b5650115a4a">[email&#160;protected]</span></a></div></div>
       <div class="ci">
         <div class="ci-l pl">Siedziba</div><div class="ci-l en">Office</div>
         <div class="ci-v" style="font-size:15px;font-family:var(--fb);font-weight:300;color:var(--gray)">Manta Studio sp. z o.o.<br>ul. Józefa Piłsudskiego 17/4<br>35-074 Rzeszów, Polska</div>
@@ -607,7 +444,7 @@ footer a:hover{color:var(--gold)}
 <!-- FOOTER -->
 <footer>
   <span>© 2025 Manta Studio sp. z o.o.</span>
-  <a href="mailto:info@mantastudio.eu">info@mantastudio.eu</a>
+  <a href="/cdn-cgi/l/email-protection#127b7c747d527f737c6673616667767b7d3c7767"><span class="__cf_email__" data-cfemail="e68f888089a68b87889287959293828f89c88393">[email&#160;protected]</span></a>
   <span style="opacity:.4">Architecture · Design Management · Sustainability</span>
 </footer>
 
@@ -632,7 +469,7 @@ footer a:hover{color:var(--gold)}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── DATA ──
 const P = {
   cp:{
@@ -765,6 +602,72 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight') cMove(1);
 });
 
+// ── LEAFLET MAP ──
+(function initMap(){
+  var s = document.createElement('script');
+  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+  s.onload = function(){
+    var map = L.map('worldmap', {
+      center: [25, 40],
+      zoom: 2,
+      zoomControl: false,
+      attributionControl: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false,
+      dragging: false,
+      touchZoom: false,
+      minZoom: 2,
+      maxZoom: 2
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+      subdomains: 'abcd',
+      maxZoom: 2
+    }).addTo(map);
+
+    var gold = '#c9973a';
+    var pinStyle = {
+      radius: 6,
+      fillColor: gold,
+      color: gold,
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 1
+    };
+    var ringStyle = {
+      radius: 14,
+      fillColor: 'transparent',
+      color: gold,
+      weight: 1,
+      opacity: 0.35,
+      fillOpacity: 0
+    };
+
+    var pins = [
+      {lat:52,  lon:20,  label:'Polska / Poland',        key:true},
+      {lat:51,  lon:10,  label:'Niemcy / Germany',       key:false},
+      {lat:24,  lon:45,  label:'Arabia Saudyjska / KSA', key:true},
+      {lat:28,  lon:84,  label:'Nepal',                  key:false},
+      {lat:15,  lon:101, label:'Tajlandia / Thailand',   key:false},
+      {lat:16,  lon:108, label:'Wietnam / Vietnam',      key:true},
+      {lat:12,  lon:105, label:'Kambodża / Cambodia',    key:false},
+      {lat:17,  lon:-88, label:'Belize',                 key:true},
+    ];
+
+    pins.forEach(function(p){
+      if(p.key) L.circleMarker([p.lat, p.lon], ringStyle).addTo(map);
+      L.circleMarker([p.lat, p.lon], pinStyle).addTo(map)
+        .bindTooltip(p.label, {
+          permanent: false,
+          direction: 'top',
+          offset: [0, -8],
+          className: 'map-tooltip'
+        });
+    });
+  };
+  document.head.appendChild(s);
+})();
+
 // ── LANG ──
 function setLang(lang){
   document.body.className='lang-'+lang;
@@ -777,15 +680,4 @@ const nav=document.getElementById('mainnav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
 
 // ── FADE IN ──
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('on'),i*70); obs.unobserve(e.target); }
-  });
-},{threshold:.08});
-document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
-
-// ── FORM ──
-function handleSub(){ alert('Dziękujemy! Wiadomość wysłana.\nThank you! Message sent.'); }
-</script>
-</body>
-</html>
+const obs=new IntersectionObserv
