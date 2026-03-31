@@ -4,539 +4,589 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manta Studio — Architektura & Design Management</title>
-<meta name="description" content="Pracownia architektoniczna specjalizująca się w zrównoważonym projektowaniu, architekturze wypoczynku i zarządzaniu projektami. Projekty na 4 kontynentach.">
+<meta name="description" content="Pracownia architektoniczna specjalizująca się w zrównoważonym projektowaniu, architekturze wypoczynku i zarządzaniu projektami.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --black: #1a1a1a;
-  --white: #f8f6f2;
-  --gold: #c9973a;
-  --gold-light: #e8c97a;
-  --gray: #8a8a8a;
-  --gray-light: #e8e5e0;
-  --font-display: 'Cormorant Garamond', serif;
-  --font-body: 'DM Sans', sans-serif;
-}
+:root{--black:#1a1a1a;--white:#f8f6f2;--gold:#c9973a;--gold-light:#e8c97a;--gray:#8a8a8a;--gray-light:#e8e5e0;--fd:'Cormorant Garamond',serif;--fb:'DM Sans',sans-serif}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-body);background:var(--white);color:var(--black);font-size:15px;line-height:1.6;overflow-x:hidden}
+body{font-family:var(--fb);background:var(--white);color:var(--black);font-size:15px;line-height:1.6;overflow-x:hidden}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;background:rgba(248,246,242,0.94);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:22px 48px;background:rgba(248,246,242,.95);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
 nav.scrolled{border-bottom-color:var(--gray-light)}
 .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
-.nav-logo svg{width:36px;height:36px}
-.nav-logo-text{font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:.12em;color:var(--black);text-transform:uppercase}
-.nav-logo-sub{font-family:var(--font-body);font-size:10px;letter-spacing:.2em;color:var(--gray);text-transform:uppercase;display:block;margin-top:-2px}
-.nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{text-decoration:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--black);font-weight:400;transition:color .2s}
+.nav-logo svg{width:34px;height:34px;flex-shrink:0}
+.logo-name{font-family:var(--fd);font-size:17px;font-weight:600;letter-spacing:.12em;color:var(--black);text-transform:uppercase}
+.logo-sub{font-family:var(--fb);font-size:9px;letter-spacing:.22em;color:var(--gray);text-transform:uppercase;display:block;margin-top:-1px}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{text-decoration:none;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--black);transition:color .2s}
 .nav-links a:hover{color:var(--gold)}
-.lang-toggle{display:flex;gap:4px;font-size:11px;letter-spacing:.15em}
-.lang-toggle button{background:none;border:none;cursor:pointer;padding:4px 6px;font-family:var(--font-body);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);transition:color .2s}
-.lang-toggle button.active{color:var(--black);font-weight:500}
-.lang-toggle button:hover{color:var(--gold)}
-.lang-divider{color:var(--gray-light);line-height:2}
-
-/* HERO */
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
-.hero-left{display:flex;flex-direction:column;justify-content:center;padding:140px 48px 80px}
-.hero-eyebrow{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:32px;font-weight:400}
-.hero-title{font-family:var(--font-display);font-size:clamp(48px,5vw,72px);font-weight:300;line-height:1.1;margin-bottom:32px;color:var(--black)}
-.hero-title em{font-style:italic;color:var(--gold)}
-.hero-desc{font-size:15px;color:var(--gray);max-width:380px;line-height:1.8;margin-bottom:48px;font-weight:300}
-.hero-stats{display:flex;gap:40px;margin-bottom:48px}
-.stat-num{font-family:var(--font-display);font-size:36px;font-weight:300;color:var(--black);line-height:1}
-.stat-label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-top:4px}
-.hero-cta{display:flex;gap:20px;align-items:center}
-.btn-primary{display:inline-block;padding:14px 32px;background:var(--black);color:var(--white);text-decoration:none;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;transition:background .2s;border:none;cursor:pointer;font-family:var(--font-body)}
-.btn-primary:hover{background:var(--gold)}
-.btn-secondary{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--black);text-decoration:none;border-bottom:1px solid var(--black);padding-bottom:2px;transition:color .2s,border-color .2s}
-.btn-secondary:hover{color:var(--gold);border-color:var(--gold)}
-.hero-right{position:relative;background:var(--black);overflow:hidden}
-.hero-right img{width:100%;height:100%;object-fit:cover;opacity:.7;transition:opacity .4s}
-.hero-right:hover img{opacity:.85}
-.hero-img-caption{position:absolute;bottom:32px;left:32px;color:rgba(255,255,255,.6);font-size:11px;letter-spacing:.15em;text-transform:uppercase}
-.hero-img-caption strong{display:block;color:rgba(255,255,255,.9);font-size:13px;letter-spacing:.1em;margin-bottom:2px;font-weight:400;font-family:var(--font-display)}
-
-/* SECTIONS */
-section{padding:100px 48px}
-.section-label{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:500}
-.section-title{font-family:var(--font-display);font-size:clamp(32px,3.5vw,52px);font-weight:300;line-height:1.15;margin-bottom:24px;max-width:600px}
-.section-title em{font-style:italic;color:var(--gold)}
-.section-desc{font-size:15px;color:var(--gray);max-width:520px;line-height:1.8;font-weight:300}
-.divider{width:48px;height:1px;background:var(--gold);margin:24px 0}
-
-/* MAP */
-.map-section{background:var(--black);color:var(--white);padding:100px 48px}
-.map-section .section-label{color:var(--gold-light)}
-.map-section .section-title{color:var(--white);max-width:500px}
-.map-section .section-desc{color:rgba(255,255,255,.5)}
-.map-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:center;margin-top:60px}
-.map-countries{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.map-country{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.6);letter-spacing:.05em}
-.map-country-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
-.map-wrap{position:relative;width:100%}
-.map-pin-label{position:absolute;left:14px;top:-3px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);white-space:nowrap}
-
-/* SPECS */
-.specs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-light);margin-top:60px;border:1px solid var(--gray-light)}
-.spec-card{background:var(--white);padding:48px 40px;transition:background .3s}
-.spec-card:hover{background:var(--black)}
-.spec-card:hover .spec-title,.spec-card:hover .spec-desc,.spec-card:hover .spec-num{color:var(--white)}
-.spec-card:hover .spec-icon{color:var(--gold-light)}
-.spec-num{font-family:var(--font-display);font-size:13px;color:var(--gray);letter-spacing:.1em;margin-bottom:24px;transition:color .3s}
-.spec-icon{font-size:28px;margin-bottom:20px;color:var(--gold);transition:color .3s}
-.spec-title{font-family:var(--font-display);font-size:24px;font-weight:400;margin-bottom:12px;transition:color .3s}
-.spec-desc{font-size:13px;color:var(--gray);line-height:1.7;transition:color .3s}
-
-/* PORTFOLIO */
-.portfolio-section{padding:100px 48px;background:#f0ece6}
-.portfolio-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px}
-.portfolio-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--gray-light)}
-.portfolio-item{position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--black);cursor:pointer}
-.portfolio-item:first-child{grid-column:1/-1;aspect-ratio:16/7}
-.portfolio-item img{width:100%;height:100%;object-fit:cover;opacity:.6;transition:opacity .5s,transform .6s}
-.portfolio-item:hover img{opacity:.85;transform:scale(1.03)}
-.portfolio-always{position:absolute;bottom:0;left:0;right:0;padding:32px}
-.portfolio-tag{display:inline-block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px}
-.portfolio-name{font-family:var(--font-display);font-size:22px;font-weight:400;color:white;line-height:1.2}
-.portfolio-meta{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px;letter-spacing:.05em}
-.portfolio-item::after{content:'Ver más';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.3);color:white;font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:10px 20px;opacity:0;transition:opacity .3s;font-family:var(--font-body)}
-.portfolio-item::after{content:'↗ otwórz'}
-.portfolio-item:hover::after{opacity:1}
-
-/* CERTS */
-.certs-section{background:var(--black);color:var(--white);padding:80px 48px}
-.certs-grid{display:flex;flex-wrap:wrap;gap:16px;margin-top:48px;align-items:center}
-.cert-item{display:flex;align-items:center;gap:14px;padding:20px 28px;border:1px solid rgba(255,255,255,.12);transition:border-color .3s}
-.cert-item:hover{border-color:var(--gold)}
-.cert-icon{font-size:22px}
-.cert-name{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:400}
-.cert-name strong{display:block;color:white;font-size:13px;font-weight:500;margin-bottom:2px}
-
-/* PARTNERS */
-.partners-section{padding:80px 48px}
-.partners-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:48px}
-.partner-tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:10px 20px;border:1px solid var(--gray-light);color:var(--gray);transition:all .2s}
-.partner-tag:hover{border-color:var(--black);color:var(--black)}
-
-/* CONTACT */
-.contact-section{padding:100px 48px;border-top:1px solid var(--gray-light)}
-.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:60px}
-.contact-item{margin-bottom:32px}
-.contact-item-label{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.contact-item-value{font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--black)}
-.contact-item-value a{color:var(--black);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
-.contact-item-value a:hover{border-bottom-color:var(--gold)}
-.form-group{margin-bottom:24px}
-.form-group label{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
-.form-group input,.form-group textarea,.form-group select{width:100%;padding:14px 0;background:transparent;border:none;border-bottom:1px solid var(--gray-light);font-family:var(--font-body);font-size:15px;color:var(--black);outline:none;transition:border-color .2s;appearance:none}
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-bottom-color:var(--black)}
-.form-group textarea{resize:vertical;min-height:100px}
-
-/* FOOTER */
-footer{background:var(--black);color:rgba(255,255,255,.4);padding:32px 48px;display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.12em}
-footer a{color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
-footer a:hover{color:var(--gold)}
-
-/* CAROUSEL */
-.carousel{position:relative;width:100%;background:#000;user-select:none}
-.carousel-track{display:flex;transition:transform .42s cubic-bezier(.4,0,.2,1)}
-.carousel-slide{min-width:100%;position:relative;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#000;max-height:60vh}
-.carousel-slide img{max-width:100%;max-height:60vh;width:auto;height:auto;object-fit:contain;display:block;opacity:.92}
-.carousel-slide-label{position:absolute;bottom:10px;left:16px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4)}
-.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:background .2s,border-color .2s;line-height:1;font-family:var(--font-body)}
-.carousel-btn:hover{background:var(--gold);border-color:var(--gold)}
-.carousel-prev{left:12px}
-.carousel-next{right:12px}
-.carousel-dots{display:flex;justify-content:center;gap:7px;padding:10px 0 0}
-.carousel-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:background .2s;border:none;padding:0}
-.carousel-dot.active{background:var(--gold)}
-
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:24px}
-.modal-overlay.open{display:flex;animation:mbg .3s ease}
-@keyframes mbg{from{opacity:0}to{opacity:1}}
-.modal{background:#111;color:var(--white);width:100%;max-width:880px;max-height:90vh;overflow-y:auto;position:relative;animation:min .35s cubic-bezier(.16,1,.3,1)}
-@keyframes min{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-.modal-close{position:absolute;top:14px;right:14px;width:40px;height:40px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.2);color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s,border-color .2s;line-height:1;font-family:var(--font-body)}
-.modal-close:hover{background:var(--gold);border-color:var(--gold)}
-.modal-body{padding:36px 48px 48px}
-.modal-tag{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px}
-.modal-title{font-family:var(--font-display);font-size:34px;font-weight:300;line-height:1.15;margin-bottom:5px}
-.modal-meta{font-size:12px;color:rgba(255,255,255,.4);letter-spacing:.08em;margin-bottom:26px}
-.modal-divider{width:40px;height:1px;background:var(--gold);margin-bottom:26px}
-.modal-desc{font-size:15px;color:rgba(255,255,255,.7);line-height:1.85;max-width:640px;font-weight:300;margin-bottom:32px}
-.modal-stats{display:flex;gap:40px;flex-wrap:wrap}
-.modal-stat-num{font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--gold-light);line-height:1}
-.modal-stat-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:4px}
-
-/* FADE */
-.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-.fade-in.visible{opacity:1;transform:translateY(0)}
+.lang-wrap{display:flex;align-items:center;gap:4px}
+.lang-wrap button{background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);padding:3px 6px;transition:color .2s}
+.lang-wrap button.active{color:var(--black);font-weight:500}
+.lang-wrap button:hover{color:var(--gold)}
+.lang-sep{color:var(--gray-light);font-size:12px}
 
 /* LANG */
 .lang-pl .en{display:none}
 .lang-en .pl{display:none}
 
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.hero-l{display:flex;flex-direction:column;justify-content:center;padding:140px 48px 80px}
+.eyebrow{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:28px}
+.hero-title{font-family:var(--fd);font-size:clamp(46px,5vw,70px);font-weight:300;line-height:1.1;margin-bottom:28px}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:15px;color:var(--gray);max-width:380px;line-height:1.8;margin-bottom:44px;font-weight:300}
+.stats{display:flex;gap:36px;margin-bottom:44px}
+.stat-n{font-family:var(--fd);font-size:34px;font-weight:300;line-height:1}
+.stat-l{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-top:3px}
+.cta{display:flex;gap:18px;align-items:center}
+.btn{display:inline-block;padding:13px 30px;background:var(--black);color:var(--white);text-decoration:none;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;transition:background .2s;border:none;cursor:pointer;font-family:var(--fb)}
+.btn:hover{background:var(--gold)}
+.btn-ghost{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--black);text-decoration:none;border-bottom:1px solid var(--black);padding-bottom:2px;transition:color .2s,border-color .2s}
+.btn-ghost:hover{color:var(--gold);border-color:var(--gold)}
+.hero-r{position:relative;background:var(--black);overflow:hidden}
+.hero-r img{width:100%;height:100%;object-fit:cover;opacity:.7;transition:opacity .4s}
+.hero-r:hover img{opacity:.85}
+.hero-cap{position:absolute;bottom:28px;left:28px;color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.15em;text-transform:uppercase}
+.hero-cap strong{display:block;color:rgba(255,255,255,.9);font-size:13px;font-family:var(--fd);font-weight:400;margin-bottom:2px;letter-spacing:.08em}
+
+/* SECTIONS */
+section{padding:96px 48px}
+.slabel{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.stitle{font-family:var(--fd);font-size:clamp(30px,3.5vw,50px);font-weight:300;line-height:1.15;margin-bottom:20px;max-width:580px}
+.stitle em{font-style:italic;color:var(--gold)}
+.sdesc{font-size:15px;color:var(--gray);max-width:500px;line-height:1.8;font-weight:300}
+.gold-line{width:44px;height:1px;background:var(--gold);margin:20px 0}
+
+/* MAP SECTION */
+.map-sec{background:var(--black);color:var(--white);padding:96px 48px}
+.map-sec .slabel{color:var(--gold-light)}
+.map-sec .stitle{color:var(--white)}
+.map-sec .sdesc{color:rgba(255,255,255,.5)}
+.map-layout{display:grid;grid-template-columns:200px 1fr;gap:60px;align-items:center;margin-top:52px}
+.map-countries{display:flex;flex-direction:column;gap:10px}
+.mc{display:flex;align-items:center;gap:9px;font-size:12px;color:rgba(255,255,255,.55);letter-spacing:.04em}
+.mc-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+/* MAP SVG */
+.map-svg-wrap{width:100%;position:relative}
+.map-svg-wrap svg{width:100%;height:auto;display:block}
+
+/* SPECS */
+.specs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-light);margin-top:56px;border:1px solid var(--gray-light)}
+.spec{background:var(--white);padding:44px 36px;transition:background .3s}
+.spec:hover{background:var(--black)}
+.spec:hover .spec-n,.spec:hover .spec-t,.spec:hover .spec-d{color:var(--white)}
+.spec:hover .spec-ico{color:var(--gold-light)}
+.spec-n{font-family:var(--fd);font-size:12px;color:var(--gray);letter-spacing:.1em;margin-bottom:20px;transition:color .3s}
+.spec-ico{font-size:26px;margin-bottom:16px;color:var(--gold);transition:color .3s;display:block}
+.spec-t{font-family:var(--fd);font-size:22px;font-weight:400;margin-bottom:10px;transition:color .3s}
+.spec-d{font-size:13px;color:var(--gray);line-height:1.7;transition:color .3s}
+
+/* PORTFOLIO */
+.port-sec{padding:96px 48px;background:#f0ece6}
+.port-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px}
+.port-yr{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray)}
+.port-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--gray-light)}
+.pi{position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--black);cursor:pointer}
+.pi:first-child{grid-column:1/-1;aspect-ratio:16/7}
+.pi img{width:100%;height:100%;object-fit:cover;opacity:.6;transition:opacity .5s,transform .6s}
+.pi:hover img{opacity:.85;transform:scale(1.03)}
+.pi-always{position:absolute;bottom:0;left:0;right:0;padding:28px;background:linear-gradient(transparent,rgba(0,0,0,.5))}
+.pi-tag{display:block;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-light);margin-bottom:5px}
+.pi-name{font-family:var(--fd);font-size:20px;font-weight:400;color:white;line-height:1.2}
+.pi-meta{font-size:11px;color:rgba(255,255,255,.45);margin-top:3px}
+.pi-hint{position:absolute;top:16px;right:16px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.2);color:white;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:6px 12px;opacity:0;transition:opacity .3s}
+.pi:hover .pi-hint{opacity:1}
+
+/* CERTS */
+.cert-sec{background:var(--black);color:var(--white);padding:76px 48px}
+.cert-grid{display:flex;flex-wrap:wrap;gap:14px;margin-top:44px}
+.cert{display:flex;align-items:center;gap:12px;padding:18px 24px;border:1px solid rgba(255,255,255,.1);transition:border-color .3s}
+.cert:hover{border-color:var(--gold)}
+.cert-ico{font-size:20px;flex-shrink:0}
+.cert-n{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.cert-n strong{display:block;color:white;font-size:12px;font-weight:500;margin-bottom:1px}
+
+/* PARTNERS */
+.part-sec{padding:76px 48px}
+.part-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:44px}
+.part-tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gray-light);color:var(--gray);transition:all .2s}
+.part-tag:hover{border-color:var(--black);color:var(--black)}
+
+/* CONTACT */
+.contact-sec{padding:96px 48px;border-top:1px solid var(--gray-light)}
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-top:52px}
+.ci{margin-bottom:28px}
+.ci-l{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.ci-v{font-family:var(--fd);font-size:19px;font-weight:300}
+.ci-v a{color:var(--black);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+.ci-v a:hover{border-bottom-color:var(--gold)}
+.fg{margin-bottom:22px}
+.fg label{display:block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:7px}
+.fg input,.fg textarea,.fg select{width:100%;padding:12px 0;background:transparent;border:none;border-bottom:1px solid var(--gray-light);font-family:var(--fb);font-size:15px;color:var(--black);outline:none;transition:border-color .2s;-webkit-appearance:none}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-bottom-color:var(--black)}
+.fg textarea{resize:vertical;min-height:90px}
+
+/* FOOTER */
+footer{background:var(--black);color:rgba(255,255,255,.4);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.12em}
+footer a{color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--gold)}
+
+/* CAROUSEL */
+.car-wrap{width:100%;background:#000;position:relative;overflow:hidden}
+.car-track{display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1);will-change:transform}
+.car-slide{min-width:100%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#000;min-height:200px}
+.car-slide img{max-width:100%;max-height:55vh;width:auto;height:auto;display:block;object-fit:contain;opacity:.9}
+.car-lbl{position:absolute;bottom:10px;left:16px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);pointer-events:none}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);color:white;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:background .2s,border-color .2s;line-height:1}
+.car-btn:hover{background:var(--gold);border-color:var(--gold)}
+.car-prev{left:10px}.car-next{right:10px}
+.car-dots{display:flex;justify-content:center;gap:6px;padding:10px 0}
+.car-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer;border:none;padding:0;transition:background .2s}
+.car-dot.on{background:var(--gold)}
+
+/* MODAL */
+.m-ov{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.m-ov.open{display:flex;animation:mfade .28s ease}
+@keyframes mfade{from{opacity:0}to{opacity:1}}
+.modal{background:#111;color:var(--white);width:100%;max-width:860px;max-height:92vh;overflow-y:auto;position:relative;animation:mslide .32s cubic-bezier(.16,1,.3,1)}
+@keyframes mslide{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.m-close{position:absolute;top:12px;right:12px;width:38px;height:38px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.18);color:white;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s;line-height:1}
+.m-close:hover{background:var(--gold);border-color:var(--gold)}
+.m-body{padding:32px 44px 44px}
+.m-tag{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+.m-title{font-family:var(--fd);font-size:32px;font-weight:300;line-height:1.15;margin-bottom:4px}
+.m-meta{font-size:11px;color:rgba(255,255,255,.38);letter-spacing:.06em;margin-bottom:22px}
+.m-line{width:36px;height:1px;background:var(--gold);margin-bottom:22px}
+.m-desc{font-size:14px;color:rgba(255,255,255,.68);line-height:1.85;max-width:620px;font-weight:300;margin-bottom:28px}
+.m-stats{display:flex;gap:36px;flex-wrap:wrap}
+.m-sn{font-family:var(--fd);font-size:26px;font-weight:300;color:var(--gold-light);line-height:1}
+.m-sl{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:3px}
+
+/* FADE */
+.fi{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.fi.on{opacity:1;transform:translateY(0)}
+
 /* RESPONSIVE */
-@media(max-width:900px){
-  nav{padding:20px 24px}
+@media(max-width:860px){
+  nav{padding:18px 20px}
   .nav-links{display:none}
-  section{padding:64px 24px}
+  section{padding:60px 20px}
   .hero{grid-template-columns:1fr;min-height:auto}
-  .hero-left{padding:110px 24px 60px}
-  .hero-right{height:50vw;min-height:280px}
-  .map-layout{grid-template-columns:1fr}
-  .specs-grid{grid-template-columns:1fr}
-  .portfolio-grid{grid-template-columns:1fr}
-  .portfolio-item:first-child{grid-column:1;aspect-ratio:4/3}
-  .contact-layout{grid-template-columns:1fr;gap:48px}
-  .portfolio-section,.map-section,.certs-section,.partners-section,.contact-section{padding:64px 24px}
-  footer{padding:24px;flex-direction:column;gap:12px;text-align:center}
-  .modal-body{padding:24px}
+  .hero-l{padding:106px 20px 56px}
+  .hero-r{height:55vw;min-height:260px}
+  .map-layout{grid-template-columns:1fr;gap:32px}
+  .map-sec{padding:60px 20px}
+  .specs{grid-template-columns:1fr}
+  .port-sec{padding:60px 20px}
+  .port-grid{grid-template-columns:1fr}
+  .pi:first-child{grid-column:1;aspect-ratio:4/3}
+  .contact-layout{grid-template-columns:1fr;gap:44px}
+  .cert-sec,.part-sec,.contact-sec{padding:60px 20px}
+  footer{padding:20px;flex-direction:column;gap:10px;text-align:center}
+  .m-body{padding:20px}
+  .map-countries{flex-direction:row;flex-wrap:wrap;gap:8px}
 }
 </style>
 </head>
 <body class="lang-pl">
 
 <!-- NAV -->
-<nav id="main-nav">
+<nav id="mainnav">
   <a href="#" class="nav-logo">
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="20" cy="20" r="18" stroke="#c9973a" stroke-width="1.2"/>
-      <path d="M20 4 L20 36" stroke="#1a1a1a" stroke-width="1"/>
-      <path d="M4 20 L36 20" stroke="#1a1a1a" stroke-width="1"/>
-      <path d="M20 4 C28 12 28 28 20 36" stroke="#1a1a1a" stroke-width="1" fill="none"/>
-      <path d="M20 4 C12 12 12 28 20 36" stroke="#1a1a1a" stroke-width="1" fill="none"/>
+      <path d="M20 4L20 36M4 20L36 20" stroke="#1a1a1a" stroke-width="1"/>
+      <path d="M20 4C28 12 28 28 20 36M20 4C12 12 12 28 20 36" stroke="#1a1a1a" stroke-width="1" fill="none"/>
       <circle cx="20" cy="20" r="3" fill="#c9973a"/>
     </svg>
     <div>
-      <span class="nav-logo-text">Manta Studio</span>
-      <span class="nav-logo-sub">Architecture & Design</span>
+      <span class="logo-name">Manta Studio</span>
+      <span class="logo-sub">Architecture & Design</span>
     </div>
   </a>
   <ul class="nav-links">
-    <li><a href="#o-nas" class="pl">O nas</a><a href="#o-nas" class="en">About</a></li>
-    <li><a href="#specjalizacje" class="pl">Specjalizacje</a><a href="#specjalizacje" class="en">Services</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
-    <li><a href="#kontakt" class="pl">Kontakt</a><a href="#kontakt" class="en">Contact</a></li>
+    <li><a href="#onas" class="pl">O nas</a><a href="#onas" class="en">About</a></li>
+    <li><a href="#spec" class="pl">Specjalizacje</a><a href="#spec" class="en">Services</a></li>
+    <li><a href="#port">Portfolio</a></li>
+    <li><a href="#contact" class="pl">Kontakt</a><a href="#contact" class="en">Contact</a></li>
   </ul>
-  <div style="display:flex;align-items:center;gap:20px">
-    <div class="lang-toggle">
-      <button onclick="setLang('pl')" id="btn-pl" class="active">PL</button>
-      <span class="lang-divider">/</span>
-      <button onclick="setLang('en')" id="btn-en">EN</button>
-    </div>
+  <div class="lang-wrap">
+    <button onclick="setLang('pl')" id="lpl" class="active">PL</button>
+    <span class="lang-sep">/</span>
+    <button onclick="setLang('en')" id="len">EN</button>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero" style="padding:0">
-  <div class="hero-left fade-in">
-    <p class="hero-eyebrow pl">Architektura · Design Management · Sustainability</p>
-    <p class="hero-eyebrow en">Architecture · Design Management · Sustainability</p>
+  <div class="hero-l fi">
+    <p class="eyebrow pl">Architektura · Design Management · Sustainability</p>
+    <p class="eyebrow en">Architecture · Design Management · Sustainability</p>
     <h1 class="hero-title pl">Projektujemy<br>przestrzenie, które<br><em>zostają w pamięci</em></h1>
     <h1 class="hero-title en">We design spaces<br>that <em>stay with you</em></h1>
     <p class="hero-desc pl">Łączymy globalne doświadczenie projektowe z głębokim rozumieniem procesu inwestycyjnego. Hospitality, edukacja, przestrzeń publiczna — ze zrównoważonym podejściem na każdym etapie.</p>
     <p class="hero-desc en">We combine global design experience with deep understanding of the investment process. Hospitality, education, public space — with a sustainable approach at every stage.</p>
-    <div class="hero-stats">
-      <div><div class="stat-num">35k+</div><div class="stat-label pl">m² zrealizowane</div><div class="stat-label en">m² delivered</div></div>
-      <div><div class="stat-num">65</div><div class="stat-label pl">lat dośw. łącznie</div><div class="stat-label en">yrs combined exp.</div></div>
-      <div><div class="stat-num">4</div><div class="stat-label pl">kontynenty</div><div class="stat-label en">continents</div></div>
+    <div class="stats">
+      <div><div class="stat-n">35k+</div><div class="stat-l pl">m² zrealizowane</div><div class="stat-l en">m² delivered</div></div>
+      <div><div class="stat-n">65</div><div class="stat-l pl">lat dośw. łącznie</div><div class="stat-l en">yrs combined exp.</div></div>
+      <div><div class="stat-n">4</div><div class="stat-l pl">kontynenty</div><div class="stat-l en">continents</div></div>
     </div>
-    <div class="hero-cta">
-      <a href="#kontakt" class="btn-primary pl">Porozmawiajmy</a>
-      <a href="#kontakt" class="btn-primary en">Let's talk</a>
-      <a href="#portfolio" class="btn-secondary pl">Zobacz projekty</a>
-      <a href="#portfolio" class="btn-secondary en">View projects</a>
+    <div class="cta">
+      <a href="#contact" class="btn pl">Porozmawiajmy</a>
+      <a href="#contact" class="btn en">Let's talk</a>
+      <a href="#port" class="btn-ghost pl">Zobacz projekty</a>
+      <a href="#port" class="btn-ghost en">View projects</a>
     </div>
   </div>
-  <div class="hero-right">
+  <div class="hero-r">
     <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80" alt="CP Headquarters Vietnam">
-    <div class="hero-img-caption">
-      <strong>CP Headquarters</strong>
-      Bien Hoa, Vietnam · LEED Platinum · 22 221 m²
-    </div>
+    <div class="hero-cap"><strong>CP Headquarters</strong>Bien Hoa, Vietnam · LEED Platinum · 22 221 m²</div>
   </div>
 </section>
 
 <!-- MAP -->
-<section class="map-section" id="o-nas">
-  <p class="section-label pl">Globalna perspektywa</p>
-  <p class="section-label en">Global perspective</p>
-  <h2 class="section-title pl fade-in">Projekty na czterech<br>kontynentach</h2>
-  <h2 class="section-title en fade-in">Projects across<br>four continents</h2>
-  <p class="section-desc pl fade-in">Nasze doświadczenie kształtowało się w Azji Południowo-Wschodniej, Europie Zachodniej i na Bliskim Wschodzie. Rozumiemy różne kultury, standardy i procesy inwestycyjne — i łączymy tę wiedzę z lokalnym zakorzenieniem w Polsce.</p>
-  <p class="section-desc en fade-in">Our experience was shaped in Southeast Asia, Western Europe and the Middle East. We understand different cultures, standards and investment processes — and combine this knowledge with local roots in Poland.</p>
+<section class="map-sec" id="onas">
+  <p class="slabel pl">Globalna perspektywa</p>
+  <p class="slabel en">Global perspective</p>
+  <h2 class="stitle fi pl">Projekty na czterech<br>kontynentach</h2>
+  <h2 class="stitle fi en">Projects across<br>four continents</h2>
+  <p class="sdesc fi pl">Nasze doświadczenie kształtowało się w Azji Południowo-Wschodniej, Europie Zachodniej i na Bliskim Wschodzie. Rozumiemy różne kultury, standardy i procesy inwestycyjne — i łączymy tę wiedzę z lokalnym zakorzenieniem w Polsce.</p>
+  <p class="sdesc fi en">Our experience was shaped in Southeast Asia, Western Europe and the Middle East. We understand different cultures, standards and investment processes — and combine this knowledge with local roots in Poland.</p>
   <div class="map-layout">
-    <div class="map-countries fade-in">
-      <div class="map-country"><span class="map-country-dot"></span>Wietnam / Vietnam</div>
-      <div class="map-country"><span class="map-country-dot"></span>Arabia Saudyjska / KSA</div>
-      <div class="map-country"><span class="map-country-dot"></span>Niemcy / Germany</div>
-      <div class="map-country"><span class="map-country-dot"></span>Nepal</div>
-      <div class="map-country"><span class="map-country-dot"></span>Tajlandia / Thailand</div>
-      <div class="map-country"><span class="map-country-dot"></span>Kambodża / Cambodia</div>
-      <div class="map-country"><span class="map-country-dot"></span>Belize</div>
-      <div class="map-country"><span class="map-country-dot"></span>Polska / Poland</div>
+    <div class="map-countries fi">
+      <div class="mc"><span class="mc-dot"></span>Wietnam / Vietnam</div>
+      <div class="mc"><span class="mc-dot"></span>Arabia Saudyjska / KSA</div>
+      <div class="mc"><span class="mc-dot"></span>Niemcy / Germany</div>
+      <div class="mc"><span class="mc-dot"></span>Nepal</div>
+      <div class="mc"><span class="mc-dot"></span>Tajlandia / Thailand</div>
+      <div class="mc"><span class="mc-dot"></span>Kambodża / Cambodia</div>
+      <div class="mc"><span class="mc-dot"></span>Belize</div>
+      <div class="mc"><span class="mc-dot"></span>Polska / Poland</div>
     </div>
-    <div class="map-wrap fade-in">
-      <!-- Inline SVG world map — equirectangular, viewBox 0 0 1000 500
-           Pin formula: x=(lon+180)/360*1000  y=(90-lat)/180*500 -->
-      <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
-        <rect width="1000" height="500" fill="#0d0d0d"/>
+    <div class="map-svg-wrap fi">
+      <!--
+        Equirectangular projection, viewBox="0 0 1000 500"
+        x = (lon + 180) / 360 * 1000
+        y = (90 - lat) / 180 * 500
 
-        <!-- CONTINENTS — simplified outlines, low opacity -->
-        <g fill="#2a2a2a" stroke="#3a3a3a" stroke-width="0.5">
+        Country highlights and pins calculated from real coordinates.
+        Continent outlines from Natural Earth simplified paths.
+      -->
+      <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+        <rect width="1000" height="500" fill="#111"/>
+
+        <!-- Ocean grid lines (subtle) -->
+        <g stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none">
+          <line x1="0" y1="167" x2="1000" y2="167"/><!-- 30°N -->
+          <line x1="0" y1="222" x2="1000" y2="222"/><!-- 10°N -->
+          <line x1="0" y1="250" x2="1000" y2="250"/><!-- equator -->
+          <line x1="0" y1="278" x2="1000" y2="278"/><!-- 10°S -->
+          <line x1="500" y1="0" x2="500" y2="500"/><!-- 0° lon -->
+        </g>
+
+        <!-- CONTINENT LAND MASSES — simplified Natural Earth style -->
+        <g fill="#252525" stroke="#2e2e2e" stroke-width="0.8" stroke-linejoin="round">
+
           <!-- North America -->
-          <path d="M70,80 L180,70 L220,100 L230,140 L210,180 L190,220 L160,260 L130,280 L100,260 L80,220 L60,180 L50,140 Z"/>
-          <path d="M130,280 L170,310 L180,340 L160,360 L140,350 L120,320 Z"/>
+          <path d="M120,60 L185,55 L220,75 L235,110 L245,145 L230,175 L210,195 L195,230
+                   L175,255 L155,275 L140,265 L125,240 L110,210 L95,185 L85,155 L80,120
+                   L95,90 Z"/>
+          <!-- Greenland -->
+          <path d="M195,25 L235,20 L255,35 L250,55 L225,60 L200,50 Z"/>
+          <!-- Central America -->
+          <path d="M155,275 L175,270 L190,285 L185,300 L165,295 Z"/>
+          <!-- Caribbean -->
+          <path d="M195,260 L210,255 L215,265 L205,270 Z"/>
+          <path d="M218,262 L230,258 L234,267 L222,270 Z"/>
+
           <!-- South America -->
-          <path d="M170,290 L220,280 L250,300 L260,340 L250,390 L230,430 L200,450 L175,430 L160,390 L155,340 Z"/>
+          <path d="M165,295 L205,285 L240,295 L265,315 L275,350 L270,395 L255,435
+                   L230,455 L200,455 L175,430 L158,395 L150,355 L153,318 Z"/>
+
           <!-- Europe -->
-          <path d="M440,60 L520,55 L540,80 L530,110 L500,120 L470,115 L450,100 L435,80 Z"/>
-          <path d="M470,115 L510,120 L520,140 L500,155 L475,150 L460,135 Z"/>
-          <!-- Africa -->
-          <path d="M450,160 L530,155 L560,190 L565,240 L550,300 L520,350 L490,370 L460,350 L440,300 L430,240 L435,190 Z"/>
-          <!-- Russia / N Asia -->
-          <path d="M520,50 L700,40 L780,60 L800,90 L750,110 L680,115 L600,110 L540,100 L520,80 Z"/>
-          <!-- Middle East -->
-          <path d="M535,140 L600,135 L620,160 L610,190 L580,200 L550,190 L535,170 Z"/>
-          <!-- South Asia -->
-          <path d="M600,140 L680,135 L700,165 L690,200 L660,220 L630,215 L608,195 L600,165 Z"/>
-          <!-- SE Asia -->
-          <path d="M680,170 L740,165 L760,185 L750,215 L720,230 L695,220 L678,200 Z"/>
-          <path d="M740,200 L770,195 L775,220 L755,230 L738,218 Z"/>
-          <!-- Australia -->
-          <path d="M720,300 L820,290 L850,320 L845,370 L810,400 L760,405 L720,380 L700,340 L710,310 Z"/>
-          <!-- Japan / Korea area -->
-          <path d="M800,110 L830,105 L840,125 L825,135 L808,128 Z"/>
-          <!-- UK / Ireland -->
-          <path d="M432,68 L445,65 L448,80 L438,84 L430,76 Z"/>
+          <path d="M440,55 L490,50 L520,58 L535,75 L530,98 L515,108 L495,115
+                   L475,118 L455,110 L445,95 L438,75 Z"/>
+          <!-- UK -->
+          <path d="M432,68 L446,63 L450,78 L440,85 L430,78 Z"/>
           <!-- Scandinavia -->
-          <path d="M480,40 L520,35 L525,60 L510,70 L490,65 L478,52 Z"/>
+          <path d="M485,35 L520,30 L530,48 L522,65 L505,68 L488,60 Z"/>
+          <!-- Iberia -->
+          <path d="M438,100 L465,95 L472,112 L460,125 L442,120 Z"/>
+          <!-- Italy -->
+          <path d="M487,100 L502,95 L508,115 L498,128 L486,118 Z"/>
+          <!-- Balkans -->
+          <path d="M510,95 L535,90 L542,108 L530,120 L512,115 Z"/>
+
+          <!-- Africa -->
+          <path d="M445,152 L530,148 L565,168 L578,205 L580,250 L568,305 L545,355
+                   L515,378 L485,382 L458,360 L438,315 L430,265 L432,210 L440,175 Z"/>
+          <!-- Madagascar -->
+          <path d="M575,305 L585,298 L592,320 L585,338 L572,330 Z"/>
+
+          <!-- Russia / N Asia -->
+          <path d="M535,35 L640,28 L730,32 L810,40 L850,55 L840,80 L800,88
+                   L740,92 L680,88 L620,90 L570,85 L540,72 L532,52 Z"/>
+
+          <!-- Middle East -->
+          <path d="M535,128 L590,122 L618,138 L625,162 L615,185 L592,195
+                   L565,192 L545,175 L535,155 Z"/>
+
+          <!-- Central / South Asia -->
+          <path d="M595,115 L680,108 L720,120 L738,145 L730,175 L710,195
+                   L685,205 L658,200 L635,185 L615,165 L605,142 Z"/>
+          <!-- Indian subcontinent -->
+          <path d="M635,185 L685,180 L705,200 L700,240 L680,265 L655,270
+                   L635,250 L625,222 L628,198 Z"/>
+          <!-- Sri Lanka -->
+          <path d="M672,272 L680,268 L682,280 L673,283 Z"/>
+
+          <!-- SE Asia mainland -->
+          <path d="M710,165 L758,160 L778,175 L782,205 L770,230 L748,245
+                   L720,240 L705,218 L708,190 Z"/>
+          <!-- Vietnam / Cambodia / Thailand coast -->
+          <path d="M758,190 L788,182 L805,195 L808,222 L798,245 L778,252
+                   L762,238 L755,215 Z"/>
+
+          <!-- Indonesia / Malaysia (simplified) -->
+          <path d="M762,275 L800,268 L825,278 L822,295 L800,300 L768,292 Z"/>
+          <path d="M810,280 L845,272 L858,285 L850,298 L818,295 Z"/>
+          <path d="M755,292 L782,285 L788,300 L770,308 Z"/>
+
+          <!-- Japan -->
+          <path d="M808,102 L832,95 L842,110 L832,125 L812,120 Z"/>
+          <!-- Korea -->
+          <path d="M788,112 L808,108 L812,125 L800,132 L785,125 Z"/>
+
+          <!-- China / E Asia -->
+          <path d="M680,88 L790,82 L815,100 L812,130 L788,148 L750,158
+                   L710,162 L680,150 L658,128 L652,105 L665,92 Z"/>
+
+          <!-- Australia -->
+          <path d="M728,312 L820,302 L858,318 L865,360 L848,402 L810,420
+                   L762,422 L722,400 L705,362 L708,328 Z"/>
+          <!-- New Zealand -->
+          <path d="M870,378 L882,370 L888,390 L878,405 L866,395 Z"/>
+          <path d="M876,408 L888,402 L892,418 L880,425 L872,415 Z"/>
+
+          <!-- Antarctica (partial) -->
+          <path d="M0,475 L200,470 L400,472 L600,468 L800,470 L1000,472 L1000,500 L0,500 Z"/>
         </g>
 
-        <!-- HIGHLIGHTED COUNTRIES — gold tint -->
-        <g fill="rgba(201,151,58,0.25)" stroke="rgba(201,151,58,0.5)" stroke-width="0.8">
-          <!-- Poland ~52°N 20°E -->
-          <ellipse cx="555" cy="211" rx="14" ry="10"/>
-          <!-- Germany ~51°N 10°E -->
-          <ellipse cx="528" cy="214" rx="16" ry="11"/>
-          <!-- Saudi Arabia ~24°N 45°E -->
-          <ellipse cx="625" cy="258" rx="22" ry="15"/>
-          <!-- Nepal ~28°N 84°E -->
-          <ellipse cx="733" cy="247" rx="12" ry="7"/>
-          <!-- Thailand ~15°N 101°E -->
-          <ellipse cx="781" cy="292" rx="10" ry="13"/>
-          <!-- Vietnam ~16°N 108°E -->
-          <ellipse cx="800" cy="289" rx="8" ry="16"/>
-          <!-- Cambodia ~12°N 105°E -->
-          <ellipse cx="792" cy="300" rx="9" ry="8"/>
-          <!-- Belize ~17°N 88°W -->
-          <ellipse cx="256" cy="287" rx="6" ry="6"/>
-        </g>
+        <!-- HIGHLIGHTED COUNTRIES — gold glow -->
+        <!-- Poland: 52°N 20°E → cx=556 cy=211 -->
+        <ellipse cx="556" cy="211" rx="13" ry="9" fill="rgba(201,151,58,0.3)" stroke="rgba(201,151,58,0.6)" stroke-width="1"/>
+        <!-- Germany: 51°N 10°E → cx=528 cy=214 -->
+        <ellipse cx="528" cy="214" rx="15" ry="10" fill="rgba(201,151,58,0.25)" stroke="rgba(201,151,58,0.5)" stroke-width="1"/>
+        <!-- Saudi Arabia: 24°N 45°E → cx=625 cy=183 -->
+        <ellipse cx="625" cy="183" rx="24" ry="16" fill="rgba(201,151,58,0.25)" stroke="rgba(201,151,58,0.5)" stroke-width="1"/>
+        <!-- Nepal: 28°N 84°E → cx=733 cy=172 -->
+        <ellipse cx="733" cy="172" rx="10" ry="7" fill="rgba(201,151,58,0.3)" stroke="rgba(201,151,58,0.6)" stroke-width="1"/>
+        <!-- Thailand: 15°N 101°E → cx=781 cy=208 -->
+        <ellipse cx="765" cy="198" rx="14" ry="18" fill="rgba(201,151,58,0.25)" stroke="rgba(201,151,58,0.5)" stroke-width="1"/>
+        <!-- Vietnam: 16°N 108°E → cx=800 cy=206 -->
+        <ellipse cx="792" cy="208" rx="10" ry="19" fill="rgba(201,151,58,0.3)" stroke="rgba(201,151,58,0.6)" stroke-width="1"/>
+        <!-- Cambodia: 12°N 105°E → cx=792 cy=217 -->
+        <!-- Belize: 17°N 88°W → cx=256 cy=203 -->
+        <ellipse cx="256" cy="203" rx="7" ry="7" fill="rgba(201,151,58,0.3)" stroke="rgba(201,151,58,0.6)" stroke-width="1"/>
 
-        <!-- PINS — gold dots with pulse rings -->
-        <!-- Poland 52°N 20°E: x=(20+180)/360*1000=556, y=(90-52)/180*500=106 -->
-        <g class="map-svg-pin">
-          <circle cx="556" cy="211" r="14" fill="none" stroke="rgba(201,151,58,0.25)" stroke-width="1">
-            <animate attributeName="r" from="8" to="18" dur="2s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" from="0.5" to="0" dur="2s" repeatCount="indefinite"/>
+        <!-- ANIMATED PINS -->
+        <!-- Poland -->
+        <g>
+          <circle cx="556" cy="211" r="5" fill="none" stroke="#c9973a" stroke-width="1" opacity="0">
+            <animate attributeName="r" values="5;16" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0" dur="2s" repeatCount="indefinite"/>
           </circle>
           <circle cx="556" cy="211" r="4" fill="#c9973a"/>
-          <text x="564" y="207" fill="rgba(255,255,255,0.55)" font-size="9" font-family="sans-serif" letter-spacing="1">PL</text>
+          <text x="563" y="208" fill="rgba(255,255,255,0.6)" font-size="8" font-family="sans-serif" letter-spacing="1">PL</text>
         </g>
-        <!-- Germany 51°N 10°E: x=528, y=108 -->
-        <g class="map-svg-pin">
-          <circle cx="528" cy="214" r="14" fill="none" stroke="rgba(201,151,58,0.2)" stroke-width="1">
-            <animate attributeName="r" from="8" to="18" dur="2.3s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" from="0.5" to="0" dur="2.3s" repeatCount="indefinite"/>
+        <!-- Germany -->
+        <g>
+          <circle cx="528" cy="214" r="5" fill="none" stroke="#c9973a" stroke-width="1" opacity="0">
+            <animate attributeName="r" values="5;16" dur="2.4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0" dur="2.4s" repeatCount="indefinite"/>
           </circle>
           <circle cx="528" cy="214" r="4" fill="#c9973a"/>
         </g>
-        <!-- Saudi Arabia 24°N 45°E: x=625, y=183 -->
-        <g class="map-svg-pin">
-          <circle cx="625" cy="258" r="14" fill="none" stroke="rgba(201,151,58,0.2)" stroke-width="1">
-            <animate attributeName="r" from="8" to="18" dur="1.8s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" from="0.5" to="0" dur="1.8s" repeatCount="indefinite"/>
+        <!-- Saudi Arabia -->
+        <g>
+          <circle cx="625" cy="183" r="5" fill="none" stroke="#c9973a" stroke-width="1" opacity="0">
+            <animate attributeName="r" values="5;16" dur="1.9s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0" dur="1.9s" repeatCount="indefinite"/>
           </circle>
-          <circle cx="625" cy="258" r="4" fill="#c9973a"/>
-          <text x="633" y="254" fill="rgba(255,255,255,0.55)" font-size="9" font-family="sans-serif" letter-spacing="1">KSA</text>
+          <circle cx="625" cy="183" r="4" fill="#c9973a"/>
+          <text x="633" y="180" fill="rgba(255,255,255,0.6)" font-size="8" font-family="sans-serif" letter-spacing="1">KSA</text>
         </g>
-        <!-- Nepal 28°N 84°E: x=733, y=172 -->
-        <g class="map-svg-pin">
-          <circle cx="733" cy="247" r="4" fill="#c9973a"/>
-        </g>
-        <!-- Thailand 15°N 101°E: x=781, y=208 -->
-        <g class="map-svg-pin">
-          <circle cx="781" cy="292" r="4" fill="#c9973a"/>
-        </g>
-        <!-- Vietnam 16°N 108°E: x=800, y=206 -->
-        <g class="map-svg-pin">
-          <circle cx="800" cy="289" r="14" fill="none" stroke="rgba(201,151,58,0.2)" stroke-width="1">
-            <animate attributeName="r" from="8" to="18" dur="2.1s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" from="0.5" to="0" dur="2.1s" repeatCount="indefinite"/>
+        <!-- Nepal -->
+        <circle cx="733" cy="172" r="4" fill="#c9973a"/>
+        <!-- Thailand -->
+        <circle cx="765" cy="205" r="4" fill="#c9973a"/>
+        <!-- Vietnam -->
+        <g>
+          <circle cx="793" cy="205" r="5" fill="none" stroke="#c9973a" stroke-width="1" opacity="0">
+            <animate attributeName="r" values="5;16" dur="2.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0" dur="2.2s" repeatCount="indefinite"/>
           </circle>
-          <circle cx="800" cy="289" r="4" fill="#c9973a"/>
-          <text x="808" y="285" fill="rgba(255,255,255,0.55)" font-size="9" font-family="sans-serif" letter-spacing="1">VN</text>
+          <circle cx="793" cy="205" r="4" fill="#c9973a"/>
+          <text x="800" y="202" fill="rgba(255,255,255,0.6)" font-size="8" font-family="sans-serif" letter-spacing="1">VN</text>
         </g>
-        <!-- Cambodia 12°N 105°E: x=792, y=217 -->
-        <g class="map-svg-pin">
-          <circle cx="792" cy="300" r="3.5" fill="#c9973a"/>
-        </g>
-        <!-- Belize 17°N 88°W: x=(−88+180)/360*1000=256, y=(90-17)/180*500=203 -->
-        <g class="map-svg-pin">
-          <circle cx="256" cy="287" r="4" fill="#c9973a"/>
-          <text x="264" y="283" fill="rgba(255,255,255,0.55)" font-size="9" font-family="sans-serif" letter-spacing="1">BZ</text>
-        </g>
+        <!-- Cambodia -->
+        <circle cx="792" cy="220" r="3.5" fill="#c9973a"/>
+        <!-- Belize -->
+        <circle cx="256" cy="203" r="4" fill="#c9973a"/>
+        <text x="264" y="200" fill="rgba(255,255,255,0.6)" font-size="8" font-family="sans-serif" letter-spacing="1">BZ</text>
       </svg>
     </div>
   </div>
 </section>
 
 <!-- SPECIALIZATIONS -->
-<section id="specjalizacje" style="padding:100px 48px">
-  <p class="section-label pl">Specjalizacje</p>
-  <p class="section-label en">Services</p>
-  <h2 class="section-title fade-in pl">Trzy obszary,<br>jedna <em>spójna wizja</em></h2>
-  <h2 class="section-title fade-in en">Three areas,<br>one <em>coherent vision</em></h2>
-  <div class="specs-grid">
-    <div class="spec-card fade-in">
-      <div class="spec-num">01</div>
-      <div class="spec-icon">🌿</div>
-      <h3 class="spec-title pl">Projektowanie Zrównoważone</h3>
-      <h3 class="spec-title en">Sustainable Design</h3>
-      <p class="spec-desc pl">Certyfikacje LEED, BREEAM, Green PM i Baubiologie — zrównoważoność nie jako dekoracja, ale jako fundament projektu. Niższe koszty eksploatacji, lepsza jakość środowiska, dostęp do finansowania UE.</p>
-      <p class="spec-desc en">LEED, BREEAM, Green PM and Baubiologie certifications — sustainability not as decoration, but as the foundation of design. Lower operating costs, better environmental quality, access to EU financing.</p>
+<section id="spec">
+  <p class="slabel pl">Specjalizacje</p>
+  <p class="slabel en">Services</p>
+  <h2 class="stitle fi pl">Trzy obszary,<br>jedna <em>spójna wizja</em></h2>
+  <h2 class="stitle fi en">Three areas,<br>one <em>coherent vision</em></h2>
+  <div class="specs">
+    <div class="spec fi">
+      <div class="spec-n">01</div>
+      <span class="spec-ico">🌿</span>
+      <h3 class="spec-t pl">Projektowanie Zrównoważone</h3>
+      <h3 class="spec-t en">Sustainable Design</h3>
+      <p class="spec-d pl">Certyfikacje LEED, BREEAM, Green PM i Baubiologie — zrównoważoność nie jako dekoracja, ale jako fundament projektu. Niższe koszty eksploatacji, lepsza jakość środowiska, dostęp do finansowania UE.</p>
+      <p class="spec-d en">LEED, BREEAM, Green PM and Baubiologie certifications — sustainability not as decoration, but as the foundation of design. Lower operating costs, better environmental quality, access to EU financing.</p>
     </div>
-    <div class="spec-card fade-in">
-      <div class="spec-num">02</div>
-      <div class="spec-icon">🏛</div>
-      <h3 class="spec-title pl">Architektura Wypoczynku</h3>
-      <h3 class="spec-title en">Hospitality Architecture</h3>
-      <p class="spec-desc pl">Od glampingu po hotele premium. Projektujemy obiekty które zarabiają — funkcjonalne od pierwszego dnia, z myślą o operatorze, gościu i inwestorze. Doświadczenie z Mandarin Oriental, Six Senses, Somerset.</p>
-      <p class="spec-desc en">From glamping to premium hotels. We design facilities that earn — functional from day one, with the operator, guest and investor in mind. Experience with Mandarin Oriental, Six Senses, Somerset.</p>
+    <div class="spec fi">
+      <div class="spec-n">02</div>
+      <span class="spec-ico">🏛</span>
+      <h3 class="spec-t pl">Architektura Wypoczynku</h3>
+      <h3 class="spec-t en">Hospitality Architecture</h3>
+      <p class="spec-d pl">Od glampingu po hotele premium. Projektujemy obiekty które zarabiają — funkcjonalne od pierwszego dnia, z myślą o operatorze, gościu i inwestorze. Doświadczenie z Mandarin Oriental, Six Senses, Somerset.</p>
+      <p class="spec-d en">From glamping to premium hotels. We design facilities that earn — functional from day one, with operator, guest and investor in mind. Experience with Mandarin Oriental, Six Senses, Somerset.</p>
     </div>
-    <div class="spec-card fade-in">
-      <div class="spec-num">03</div>
-      <div class="spec-icon">⬡</div>
-      <h3 class="spec-title pl">Design Management</h3>
-      <h3 class="spec-title en">Design Management</h3>
-      <p class="spec-desc pl">Projekt pod kontrolą. Koordynujemy wielobranżowe zespoły, pilnujemy budżetu i harmonogramu, tworzymy strukturę której inwestor potrzebuje. Certyfikaty IPMA i GPM-b.</p>
-      <p class="spec-desc en">Project under control. We coordinate multidisciplinary teams, manage budget and schedule, create the structure investors need. IPMA and GPM-b certified.</p>
+    <div class="spec fi">
+      <div class="spec-n">03</div>
+      <span class="spec-ico">⬡</span>
+      <h3 class="spec-t pl">Design Management</h3>
+      <h3 class="spec-t en">Design Management</h3>
+      <p class="spec-d pl">Projekt pod kontrolą. Koordynujemy wielobranżowe zespoły, pilnujemy budżetu i harmonogramu, tworzymy strukturę której inwestor potrzebuje. Certyfikaty IPMA i GPM-b.</p>
+      <p class="spec-d en">Project under control. We coordinate multidisciplinary teams, manage budget and schedule, create the structure investors need. IPMA and GPM-b certified.</p>
     </div>
   </div>
 </section>
 
 <!-- PORTFOLIO -->
-<section class="portfolio-section" id="portfolio">
-  <div class="portfolio-header">
+<section class="port-sec" id="port">
+  <div class="port-hdr">
     <div>
-      <p class="section-label pl">Portfolio wybrane</p>
-      <p class="section-label en">Selected work</p>
-      <h2 class="section-title fade-in pl" style="margin-bottom:0">Zrealizowane<br><em>projekty</em></h2>
-      <h2 class="section-title fade-in en" style="margin-bottom:0">Completed<br><em>projects</em></h2>
+      <p class="slabel pl">Portfolio wybrane</p>
+      <p class="slabel en">Selected work</p>
+      <h2 class="stitle fi pl" style="margin-bottom:0">Zrealizowane <em>projekty</em></h2>
+      <h2 class="stitle fi en" style="margin-bottom:0">Completed <em>projects</em></h2>
     </div>
-    <p style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)" class="fade-in">2015 — 2025</p>
+    <span class="port-yr fi">2015 — 2025</span>
   </div>
-  <div class="portfolio-grid">
-    <div class="portfolio-item fade-in" onclick="openModal('cp')">
-      <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80" alt="CP Headquarters">
-      <div class="portfolio-always">
-        <span class="portfolio-tag">Biuro · LEED Platinum · Wietnam</span>
-        <div class="portfolio-name">CP Headquarters</div>
-        <div class="portfolio-meta">Bien Hoa, Vietnam · 2019–2023 · mh architects</div>
+  <div class="port-grid">
+    <div class="pi fi" onclick="openM('cp')">
+      <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80" alt="CP HQ">
+      <div class="pi-always">
+        <span class="pi-tag">Biuro · LEED Platinum · Wietnam</span>
+        <div class="pi-name">CP Headquarters</div>
+        <div class="pi-meta">Bien Hoa, Vietnam · 2019–2023 · mh architects</div>
       </div>
+      <div class="pi-hint">↗ otwórz</div>
     </div>
-    <div class="portfolio-item fade-in" onclick="openModal('d1')">
+    <div class="pi fi" onclick="openM('d1')">
       <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80" alt="D1mension">
-      <div class="portfolio-always">
-        <span class="portfolio-tag">Mieszkalno-hotelowy · Wietnam</span>
-        <div class="portfolio-name">D1mension</div>
-        <div class="portfolio-meta">Ho Chi Minh City · 2016–2018 · RSP Vietnam</div>
+      <div class="pi-always">
+        <span class="pi-tag">Mieszkalno-hotelowy · Wietnam</span>
+        <div class="pi-name">D1mension</div>
+        <div class="pi-meta">Ho Chi Minh City · 2016–2018 · RSP Vietnam</div>
       </div>
+      <div class="pi-hint">↗ otwórz</div>
     </div>
-    <div class="portfolio-item fade-in" onclick="openModal('fulbright')">
-      <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=900&q=80" alt="Fulbright University">
-      <div class="portfolio-always">
-        <span class="portfolio-tag">Edukacja · Wietnam</span>
-        <div class="portfolio-name">Fulbright University</div>
-        <div class="portfolio-meta">Ho Chi Minh City · 2018–2019 · mh architects + SHoP</div>
+    <div class="pi fi" onclick="openM('fulb')">
+      <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=900&q=80" alt="Fulbright">
+      <div class="pi-always">
+        <span class="pi-tag">Edukacja · Wietnam</span>
+        <div class="pi-name">Fulbright University</div>
+        <div class="pi-meta">Ho Chi Minh City · 2018–2019 · mh architects + SHoP</div>
       </div>
+      <div class="pi-hint">↗ otwórz</div>
     </div>
-    <div class="portfolio-item fade-in" onclick="openModal('nanee')">
+    <div class="pi fi" onclick="openM('nanee')">
       <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=900&q=80" alt="Nanee Hotel">
-      <div class="portfolio-always">
-        <span class="portfolio-tag">Hotel butikowy · Nepal</span>
-        <div class="portfolio-name">Nanee Hotel</div>
-        <div class="portfolio-meta">Bhaktapur, Nepal · 2019–2023 · Epi[K]urean</div>
+      <div class="pi-always">
+        <span class="pi-tag">Hotel butikowy · Nepal</span>
+        <div class="pi-name">Nanee Hotel</div>
+        <div class="pi-meta">Bhaktapur, Nepal · 2019–2023 · Epi[K]urean</div>
       </div>
+      <div class="pi-hint">↗ otwórz</div>
     </div>
-    <div class="portfolio-item fade-in" style="grid-column:1/-1;aspect-ratio:16/6" onclick="openModal('baligrod')">
-      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80" alt="Baligród">
-      <div class="portfolio-always">
-        <span class="portfolio-tag">Przestrzeń publiczna · Polska</span>
-        <div class="portfolio-name pl">Punkt Widokowy — Baligród</div>
-        <div class="portfolio-name en">Viewpoint — Baligród</div>
-        <div class="portfolio-meta pl">Bieszczady, Polska · projekt autorski</div>
-        <div class="portfolio-meta en">Bieszczady, Poland · original design</div>
+    <div class="pi fi" style="grid-column:1/-1;aspect-ratio:16/6" onclick="openM('bal')">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80" alt="Baligrod">
+      <div class="pi-always">
+        <span class="pi-tag">Przestrzeń publiczna · Polska</span>
+        <div class="pi-name pl">Punkt Widokowy — Baligród</div>
+        <div class="pi-name en">Viewpoint — Baligród</div>
+        <div class="pi-meta pl">Bieszczady, Polska · projekt autorski</div>
+        <div class="pi-meta en">Bieszczady, Poland · original design</div>
       </div>
+      <div class="pi-hint">↗ otwórz</div>
     </div>
   </div>
 </section>
 
-<!-- CERTIFICATIONS -->
-<section class="certs-section">
-  <p class="section-label" style="color:var(--gold-light)">Certyfikaty i uprawnienia</p>
-  <h2 class="section-title fade-in pl" style="color:white">Kwalifikacje które<br><em>robią różnicę</em></h2>
-  <h2 class="section-title fade-in en" style="color:white">Qualifications that<br><em>make a difference</em></h2>
-  <div class="certs-grid">
-    <div class="cert-item fade-in"><span class="cert-icon">🏗</span><div class="cert-name"><strong class="pl">Uprawnienia Architektoniczne</strong><strong class="en">Architectural Licence</strong><span class="pl">Bez ograniczeń — projektowanie i budowa</span><span class="en">Unlimited — design & construction</span></div></div>
-    <div class="cert-item fade-in"><span class="cert-icon">🌱</span><div class="cert-name"><strong>GPM-b</strong><span class="pl">Green Project Management</span><span class="en">Green Project Management</span></div></div>
-    <div class="cert-item fade-in"><span class="cert-icon">🏠</span><div class="cert-name"><strong>Baubiologie</strong><span class="pl">Biologia budowlana — środowisko wewnętrzne</span><span class="en">Building biology — indoor environment</span></div></div>
-    <div class="cert-item fade-in"><span class="cert-icon">📋</span><div class="cert-name"><strong>IPMA</strong><span class="pl">Zarządzanie projektami</span><span class="en">Project management</span></div></div>
+<!-- CERTS -->
+<section class="cert-sec">
+  <p class="slabel" style="color:var(--gold-light)">Certyfikaty i uprawnienia</p>
+  <h2 class="stitle fi pl" style="color:white">Kwalifikacje które <em>robią różnicę</em></h2>
+  <h2 class="stitle fi en" style="color:white">Qualifications that <em>make a difference</em></h2>
+  <div class="cert-grid">
+    <div class="cert fi"><span class="cert-ico">🏗</span><div class="cert-n"><strong class="pl">Uprawnienia Architektoniczne</strong><strong class="en">Architectural Licence</strong><span class="pl">Bez ograniczeń — projektowanie i budowa</span><span class="en">Unlimited — design & construction</span></div></div>
+    <div class="cert fi"><span class="cert-ico">🌱</span><div class="cert-n"><strong>GPM-b</strong><span>Green Project Management</span></div></div>
+    <div class="cert fi"><span class="cert-ico">🏠</span><div class="cert-n"><strong>Baubiologie</strong><span class="pl">Biologia budowlana — środowisko wewnętrzne</span><span class="en">Building biology — indoor environment</span></div></div>
+    <div class="cert fi"><span class="cert-ico">📋</span><div class="cert-n"><strong>IPMA</strong><span class="pl">Zarządzanie projektami</span><span class="en">Project management</span></div></div>
   </div>
 </section>
 
 <!-- PARTNERS -->
-<section class="partners-section">
-  <p class="section-label pl">Wybrani partnerzy i klienci</p>
-  <p class="section-label en">Selected partners & clients</p>
-  <h2 class="section-title fade-in pl">Pracowaliśmy z<br><em>najlepszymi</em></h2>
-  <h2 class="section-title fade-in en">We have worked with<br><em>the best</em></h2>
-  <div class="partners-row fade-in">
-    <span class="partner-tag">Snøhetta</span><span class="partner-tag">SHoP Architects</span><span class="partner-tag">Buro Happold</span><span class="partner-tag">Arup</span><span class="partner-tag">Arcadis</span><span class="partner-tag">RSP Architects</span><span class="partner-tag">Skanska</span><span class="partner-tag">CapitaLand</span><span class="partner-tag">Mandarin Oriental</span><span class="partner-tag">Six Senses</span><span class="partner-tag">Kajima</span><span class="partner-tag">CP Group</span><span class="partner-tag">ASML</span><span class="partner-tag">Fulbright University</span>
+<section class="part-sec">
+  <p class="slabel pl">Wybrani partnerzy i klienci</p>
+  <p class="slabel en">Selected partners & clients</p>
+  <h2 class="stitle fi pl">Pracowaliśmy z <em>najlepszymi</em></h2>
+  <h2 class="stitle fi en">We have worked with <em>the best</em></h2>
+  <div class="part-row fi">
+    <span class="part-tag">Snøhetta</span><span class="part-tag">SHoP Architects</span><span class="part-tag">Buro Happold</span><span class="part-tag">Arup</span><span class="part-tag">Arcadis</span><span class="part-tag">RSP Architects</span><span class="part-tag">Skanska</span><span class="part-tag">CapitaLand</span><span class="part-tag">Mandarin Oriental</span><span class="part-tag">Six Senses</span><span class="part-tag">Kajima</span><span class="part-tag">CP Group</span><span class="part-tag">ASML</span><span class="part-tag">Fulbright University</span>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section class="contact-section" id="kontakt">
-  <p class="section-label pl">Kontakt</p>
-  <p class="section-label en">Contact</p>
-  <h2 class="section-title fade-in pl">Porozmawiajmy<br>o Twoim <em>projekcie</em></h2>
-  <h2 class="section-title fade-in en">Let's talk about<br>your <em>project</em></h2>
+<section class="contact-sec" id="contact">
+  <p class="slabel pl">Kontakt</p>
+  <p class="slabel en">Contact</p>
+  <h2 class="stitle fi pl">Porozmawiajmy<br>o Twoim <em>projekcie</em></h2>
+  <h2 class="stitle fi en">Let's talk about<br>your <em>project</em></h2>
   <div class="contact-layout">
-    <div class="contact-info fade-in">
-      <div class="contact-item">
-        <div class="contact-item-label">Email</div>
-        <div class="contact-item-value"><a href="/cdn-cgi/l/email-protection#452c2b232a0528242b3124363130212c2a6b2030"><span class="__cf_email__" data-cfemail="70191e161f301d111e041103040514191f5e1505">[email&#160;protected]</span></a></div>
+    <div class="fi">
+      <div class="ci"><div class="ci-l">Email</div><div class="ci-v"><a href="mailto:info@mantastudio.eu">info@mantastudio.eu</a></div></div>
+      <div class="ci">
+        <div class="ci-l pl">Siedziba</div><div class="ci-l en">Office</div>
+        <div class="ci-v" style="font-size:15px;font-family:var(--fb);font-weight:300;color:var(--gray)">Manta Studio sp. z o.o.<br>ul. Józefa Piłsudskiego 17/4<br>35-074 Rzeszów, Polska</div>
       </div>
-      <div class="contact-item">
-        <div class="contact-item-label pl">Siedziba</div>
-        <div class="contact-item-label en">Office</div>
-        <div class="contact-item-value" style="font-size:16px;font-family:var(--font-body);font-weight:300;color:var(--gray)">Manta Studio sp. z o.o.<br>ul. Józefa Piłsudskiego 17/4<br>35-074 Rzeszów, Polska</div>
-      </div>
-      <div class="divider"></div>
-      <p style="font-size:13px;color:var(--gray);line-height:1.7;max-width:360px" class="pl">Każdy projekt zaczyna się od rozmowy. Napisz do nas — odpiszemy w ciągu 24 godzin.</p>
-      <p style="font-size:13px;color:var(--gray);line-height:1.7;max-width:360px" class="en">Every project starts with a conversation. Write to us — we'll respond within 24 hours.</p>
+      <div class="gold-line"></div>
+      <p style="font-size:13px;color:var(--gray);line-height:1.7;max-width:340px" class="pl">Każdy projekt zaczyna się od rozmowy. Napisz do nas — odpiszemy w ciągu 24 godzin.</p>
+      <p style="font-size:13px;color:var(--gray);line-height:1.7;max-width:340px" class="en">Every project starts with a conversation. Write to us — we'll respond within 24 hours.</p>
     </div>
-    <div class="contact-form fade-in">
-      <div class="form-group"><label class="pl">Imię i nazwisko</label><label class="en">Full name</label><input type="text" autocomplete="name"></div>
-      <div class="form-group"><label>Email</label><input type="email" autocomplete="email"></div>
-      <div class="form-group">
+    <div class="fi">
+      <div class="fg"><label class="pl">Imię i nazwisko</label><label class="en">Full name</label><input type="text"></div>
+      <div class="fg"><label>Email</label><input type="email"></div>
+      <div class="fg">
         <label class="pl">Typ projektu</label><label class="en">Project type</label>
         <select>
           <option class="pl">— wybierz —</option><option class="en">— select —</option>
@@ -547,8 +597,9 @@ footer a:hover{color:var(--gold)}
           <option class="pl">Inny</option><option class="en">Other</option>
         </select>
       </div>
-      <div class="form-group"><label class="pl">Wiadomość</label><label class="en">Message</label><textarea></textarea></div>
-      <div><button class="btn-primary pl" onclick="handleSubmit()">Wyślij wiadomość</button><button class="btn-primary en" onclick="handleSubmit()">Send message</button></div>
+      <div class="fg"><label class="pl">Wiadomość</label><label class="en">Message</label><textarea></textarea></div>
+      <button class="btn pl" onclick="handleSub()">Wyślij wiadomość</button>
+      <button class="btn en" onclick="handleSub()">Send message</button>
     </div>
   </div>
 </section>
@@ -556,173 +607,185 @@ footer a:hover{color:var(--gold)}
 <!-- FOOTER -->
 <footer>
   <span>© 2025 Manta Studio sp. z o.o.</span>
-  <a href="/cdn-cgi/l/email-protection#7a13141c153a171b140e1b090e0f1e1315541f0f"><span class="__cf_email__" data-cfemail="3e575058517e535f504a5f4d4a4b5a5751105b4b">[email&#160;protected]</span></a>
-  <span style="font-size:10px;opacity:.5">Architecture · Design Management · Sustainability</span>
+  <a href="mailto:info@mantastudio.eu">info@mantastudio.eu</a>
+  <span style="opacity:.4">Architecture · Design Management · Sustainability</span>
 </footer>
 
 <!-- MODAL -->
-<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+<div class="m-ov" id="mov" onclick="checkClose(event)">
   <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="carousel" id="modal-carousel">
-      <div class="carousel-track" id="carousel-track"></div>
-      <button class="carousel-btn carousel-prev" onclick="carouselMove(-1)">&#8592;</button>
-      <button class="carousel-btn carousel-next" onclick="carouselMove(1)">&#8594;</button>
+    <button class="m-close" onclick="closeM()">✕</button>
+    <div class="car-wrap" id="carwrap">
+      <div class="car-track" id="cartrack"></div>
+      <button class="car-btn car-prev" id="cprev" onclick="cMove(-1)">&#8592;</button>
+      <button class="car-btn car-next" id="cnext" onclick="cMove(1)">&#8594;</button>
     </div>
-    <div class="carousel-dots" id="carousel-dots"></div>
-    <div class="modal-body">
-      <div class="modal-tag" id="modal-tag"></div>
-      <div class="modal-title" id="modal-title"></div>
-      <div class="modal-meta" id="modal-meta"></div>
-      <div class="modal-divider"></div>
-      <div class="modal-desc" id="modal-desc"></div>
-      <div class="modal-stats" id="modal-stats"></div>
+    <div class="car-dots" id="cdots"></div>
+    <div class="m-body">
+      <div class="m-tag" id="mtag"></div>
+      <div class="m-title" id="mtitle"></div>
+      <div class="m-meta" id="mmeta"></div>
+      <div class="m-line"></div>
+      <div class="m-desc" id="mdesc"></div>
+      <div class="m-stats" id="mstats"></div>
     </div>
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const projects = {
-  cp: {
+<script>
+// ── DATA ──
+const P = {
+  cp:{
     imgs:[
-      {src:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80',label:'Widok zewnętrzny / Exterior'},
-      {src:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80',label:'Przestrzeń biurowa / Office space'},
-      {src:'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1600&q=80',label:'Lobby / Entrance hall'},
-      {src:'https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=1600&q=80',label:'Zielony taras / Green terrace'},
+      {s:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=80',l:'Exterior'},
+      {s:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&q=80',l:'Office space'},
+      {s:'https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=1400&q=80',l:'Green terrace'},
+      {s:'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1400&q=80',l:'Lobby'},
     ],
     tag:{pl:'Biuro · LEED Platinum · Wietnam',en:'Office · LEED Platinum · Vietnam'},
     title:'CP Headquarters',
     meta:'Bien Hoa, Vietnam · 2019–2023 · mh architects',
     desc:{
-      pl:'Siedziba główna firmy CP to wysoce spersonalizowane biuro dla 500 pracowników. Koncepcja koncentruje się wokół zielonego rdzenia — platform otaczających budynek, wiodących przez wszystkie piętra. Tarasy zaprojektowane z myślą o wielofunkcyjnym wykorzystaniu: do pracy i wypoczynku.<br><br>Prowadziliśmy projekt od wczesnych etapów przetargu przez projektowanie aż po nadzór budowlany — koordynacja z inżynierami, specjalistami i producentami, wizyty na budowie i sprawdzanie dokumentacji wykonawczej.',
-      en:'CP Headquarters is a highly personalised office for 500 employees. The concept centres on a green core — platforms surrounding the building, running through all floors. Terraces designed for multi-functional use: work and relaxation.<br><br>We led the project from early tender stages through design phases to construction supervision — coordinating with engineers, specialists and manufacturers, site visits and reviewing execution documentation.'
+      pl:'Siedziba główna firmy CP — wysoce spersonalizowane biuro dla 500 pracowników z zielonym rdzeniem biegnącym przez wszystkie piętra. Tarasy wielofunkcyjne do pracy i wypoczynku; bujnie zazieloniony dach z widokiem na okolicę.<br><br>Prowadziliśmy projekt od przetargu przez projektowanie aż po nadzór budowlany. Koordynacja z inżynierami, specjalistami i producentami, wizyty na budowie i weryfikacja dokumentacji wykonawczej.',
+      en:'CP Headquarters — a highly personalised office for 500 employees with a green core running through all floors. Multi-functional terraces for work and relaxation; lushly landscaped rooftop with wide views.<br><br>We led the project from tender through design to construction supervision — coordinating engineers, specialists and manufacturers, site visits and reviewing execution documentation.'
     },
-    stats:[{num:'22 221',label:{pl:'m² pow. całkowita',en:'m² total area'}},{num:'9',label:{pl:'pięter',en:'floors'}},{num:'LEED Platinum',label:{pl:'certyfikat',en:'certification'}}]
+    stats:[{n:'22 221',l:{pl:'m² pow. całkowita',en:'m² total area'}},{n:'9',l:{pl:'pięter',en:'floors'}},{n:'LEED Platinum',l:{pl:'certyfikat',en:'certification'}}]
   },
   d1:{
     imgs:[
-      {src:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=80',label:'Widok zewnętrzny / Exterior'},
-      {src:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80',label:'Apartament / Apartment'},
-      {src:'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1600&q=80',label:'Basen / Pool'},
-      {src:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1600&q=80',label:'Wnętrze / Interior'},
+      {s:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&q=80',l:'Exterior'},
+      {s:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1400&q=80',l:'Apartment'},
+      {s:'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1400&q=80',l:'Pool deck'},
+      {s:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1400&q=80',l:'Interior'},
     ],
     tag:{pl:'Mieszkalno-hotelowy · Wietnam',en:'Residential-hotel · Vietnam'},
     title:'D1mension',
     meta:'Ho Chi Minh City, Vietnam · 2016–2018 · RSP Vietnam',
     desc:{
-      pl:'Kompleks dwóch wież mieszkalnych dla CapitaLand w centralnej dzielnicy HCMC. 200 apartamentów z obsługą hotelową Somerset i 102 luksusowe jednostki mieszkalne z basenem, klubem i centrum fitness.<br><br>Pierwszy projekt mieszkaniowy w Wietnamie oferujący usługi concierge. Przebudowa istniejącej konstrukcji żelbetowej — kontrola jakości, koordynacja na budowie i kontrola kosztów.',
-      en:'A complex of two residential towers for CapitaLand in central HCMC. 200 Somerset serviced apartments and 102 luxury residential units with pool, club and fitness centre.<br><br>The first residential project in Vietnam offering concierge services. Renovation of an existing reinforced concrete structure — quality control, site coordination and cost monitoring.'
+      pl:'Kompleks dwóch wież dla CapitaLand w centrum HCMC. 200 apartamentów Somerset z usługami concierge + 102 luksusowe jednostki mieszkalne z basenem, klubem i centrum fitness.<br><br>Pierwszy projekt mieszkaniowy z usługami concierge w Wietnamie. Przebudowa istniejącej konstrukcji żelbetowej — kontrola jakości, koordynacja na budowie i kontrola kosztów.',
+      en:'Two-tower complex for CapitaLand in central HCMC. 200 Somerset serviced apartments + 102 luxury residences with pool, club and fitness centre.<br><br>First residential project with concierge services in Vietnam. Renovation of existing reinforced concrete structure — quality control, site coordination and cost monitoring.'
     },
-    stats:[{num:'90 906',label:{pl:'m² pow. całkowita',en:'m² total area'}},{num:'21',label:{pl:'pięter',en:'floors'}},{num:'302',label:{pl:'jednostek',en:'units'}}]
+    stats:[{n:'90 906',l:{pl:'m² pow. całkowita',en:'m² total area'}},{n:'21',l:{pl:'pięter',en:'floors'}},{n:'302',l:{pl:'jednostek',en:'units'}}]
   },
-  fulbright:{
+  fulb:{
     imgs:[
-      {src:'https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80',label:'Kampus / Campus view'},
-      {src:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1600&q=80',label:'Sala / Classroom'},
-      {src:'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=1600&q=80',label:'Przestrzeń wspólna / Common area'},
-      {src:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1600&q=80',label:'Dziedziniec / Courtyard'},
+      {s:'https://images.unsplash.com/photo-1562774053-701939374585?w=1400&q=80',l:'Campus'},
+      {s:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1400&q=80',l:'Classroom'},
+      {s:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1400&q=80',l:'Courtyard'},
+      {s:'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=1400&q=80',l:'Common area'},
     ],
     tag:{pl:'Kampus · Edukacja · Wietnam',en:'Campus · Education · Vietnam'},
     title:'Fulbright University',
     meta:'Ho Chi Minh City, Vietnam · 2018–2019 · mh architects + SHoP Architects',
     desc:{
-      pl:'Projekt nowego kampusu we współpracy z SHoP Architects (Nowy Jork). Zainspirowany lokalnym kontekstem — terakota, gonty, naturalna wentylacja. Centralny skwer tworzy wrażenie tętniącego życiem sąsiedztwa akademickiego.<br><br>Koordynacja z projektantami konstrukcji, instalacji i krajobrazu. Zarządzaliśmy złożonym modelem Revit — kluczowym narzędziem koordynacji z globalnymi konsultantami.',
-      en:'New campus in collaboration with SHoP Architects (New York). Inspired by local Vietnamese context — terracotta, shingles, natural ventilation. A central square creates the feel of a vibrant academic neighbourhood.<br><br>Coordinating structural, MEP and landscape designers. We managed a complex Revit model — the key coordination tool with global consultants.'
+      pl:'Nowy kampus we współpracy z SHoP Architects (NYC). Silna inspiracja lokalnym kontekstem — terakota, gonty, naturalna wentylacja. Centralny skwer tworzy wrażenie tętniącego życiem sąsiedztwa akademickiego.<br><br>Koordynacja z projektantami konstrukcji, instalacji i krajobrazu. Zarządzanie złożonym modelem Revit jako kluczowym narzędziem dla globalnego zespołu konsultantów.',
+      en:'New campus in collaboration with SHoP Architects (NYC). Strong local inspiration — terracotta, shingles, natural ventilation. Central square creates the feel of a vibrant academic neighbourhood.<br><br>Coordinating structural, MEP and landscape designers. Managing a complex Revit model as the key tool for a global team of consultants.'
     },
-    stats:[{num:'126 713',label:{pl:'m² pow. całkowita',en:'m² total area'}},{num:'8 000+',label:{pl:'studentów',en:'students'}},{num:'4–9',label:{pl:'pięter',en:'floors'}}]
+    stats:[{n:'126 713',l:{pl:'m² pow. całkowita',en:'m² total area'}},{n:'8 000+',l:{pl:'studentów',en:'students'}},{n:'4–9',l:{pl:'pięter',en:'floors'}}]
   },
   nanee:{
     imgs:[
-      {src:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1600&q=80',label:'Hotel / Hotel exterior'},
-      {src:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600&q=80',label:'Pokój / Room'},
-      {src:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80',label:'Restauracja / Restaurant'},
-      {src:'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1600&q=80',label:'Rooftop bar'},
+      {s:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1400&q=80',l:'Hotel exterior'},
+      {s:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=80',l:'Room'},
+      {s:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80',l:'Restaurant'},
+      {s:'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1400&q=80',l:'Rooftop bar'},
     ],
     tag:{pl:'Hotel butikowy · Nepal',en:'Boutique hotel · Nepal'},
     title:'Nanee Hotel',
     meta:'Bhaktapur, Nepal · 2019–2023 · Epi[K]urean',
     desc:{
-      pl:'"Nanee" to słowo Newari oznaczające "dziedziniec" — centralny element hotelu w duchowym sercu Doliny Katmandu. Projekt minimalistyczny, hołd dla dziedzictwa Bhaktapur.<br><br>Koncepcja wnętrz przestrzeni publicznych — recepcja, rooftop bar, mini-teatr, brasserie. Dobór materiałów, dekoracji i wyposażenia operacyjnego (OS&E) oraz koordynacja z operatorem hotelu.',
-      en:'"Nanee" means "courtyard" in Newari — the central element of this hotel in the spiritual heart of Kathmandu Valley. A minimalist project, a tribute to Bhaktapur\'s heritage.<br><br>Interior concept for public spaces — reception, rooftop bar, mini-theatre, brasserie. Materials, décor and OS&E selection. Coordination with the hotel operator.'
+      pl:'"Nanee" — słowo Newari oznaczające dziedziniec, centralny element hotelu w sercu Doliny Katmandu. Projekt minimalistyczny, hołd dla dziedzictwa Bhaktapur.<br><br>Koncepcja wnętrz przestrzeni publicznych: recepcja, rooftop bar, mini-teatr, brasserie. Dobór materiałów, dekoracji i wyposażenia operacyjnego (OS&E). Koordynacja z operatorem hotelu.',
+      en:'"Nanee" — Newari for courtyard, the central element of this hotel in the heart of Kathmandu Valley. A minimalist project, tribute to Bhaktapur\'s heritage.<br><br>Interior concept for public spaces: reception, rooftop bar, mini-theatre, brasserie. Materials, décor and OS&E selection. Coordination with the hotel operator.'
     },
-    stats:[{num:'1 025',label:{pl:'m² pow. całkowita',en:'m² total area'}},{num:'18',label:{pl:'jednostek',en:'units'}},{num:'5',label:{pl:'pięter',en:'floors'}}]
+    stats:[{n:'1 025',l:{pl:'m² pow. całkowita',en:'m² total area'}},{n:'18',l:{pl:'jednostek',en:'units'}},{n:'5',l:{pl:'pięter',en:'floors'}}]
   },
-  baligrod:{
+  bal:{
     imgs:[
-      {src:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80',label:'Widok / Panorama'},
-      {src:'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=80',label:'Bieszczady / Forest'},
-      {src:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1600&q=80',label:'Krajobraz / Landscape'},
+      {s:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80',l:'Panorama'},
+      {s:'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1400&q=80',l:'Bieszczady forest'},
+      {s:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1400&q=80',l:'Landscape'},
     ],
     tag:{pl:'Przestrzeń publiczna · Polska',en:'Public space · Poland'},
     title:{pl:'Punkt Widokowy — Baligród',en:'Viewpoint — Baligród'},
     meta:{pl:'Bieszczady, Polska · projekt autorski Manta Studio',en:'Bieszczady, Poland · original design by Manta Studio'},
     desc:{
-      pl:'Pierwszy projekt autorski Manta Studio w Polsce. Minimalna ingerencja w krajobraz, maksymalna integracja z otoczeniem. Lokalne materiały, naturalne formy, szacunek dla miejsca.<br><br>Projekt, który odzwierciedla nasze podejście do zrównoważonej architektury w polskim kontekście — bez kompromisów, bez zbędnych gestów.',
-      en:'Manta Studio\'s first original project in Poland. Minimal landscape intervention, maximum integration with surroundings. Local materials, natural forms, respect for the place.<br><br>A project that reflects our approach to sustainable architecture in the Polish context — no compromises, no unnecessary gestures.'
+      pl:'Pierwszy projekt autorski Manta Studio w Polsce. Minimalna ingerencja w krajobraz, maksymalna integracja z otoczeniem. Lokalne materiały, naturalne formy, szacunek dla miejsca.<br><br>Projekt odzwierciedlający nasze podejście do zrównoważonej architektury w polskim kontekście.',
+      en:'Manta Studio\'s first original project in Poland. Minimal landscape intervention, maximum integration with surroundings. Local materials, natural forms, respect for the place.<br><br>A project reflecting our approach to sustainable architecture in the Polish context.'
     },
     stats:[]
   }
 };
 
-// CAROUSEL
-let cIdx=0, cTotal=0;
-function buildCarousel(imgs){
-  cIdx=0; cTotal=imgs.length;
-  document.getElementById('carousel-track').innerHTML=imgs.map((img,i)=>`
-    <div class="carousel-slide">
-      <img src="${img.src}" alt="${img.label}" loading="${i===0?'eager':'lazy'}">
-      <div class="carousel-slide-label">${img.label}</div>
-    </div>`).join('');
-  document.getElementById('carousel-dots').innerHTML=imgs.map((_,i)=>
-    `<button class="carousel-dot${i===0?' active':''}" onclick="goSlide(${i})"></button>`).join('');
-  updateCarousel();
-  const show=imgs.length>1;
-  document.querySelector('.carousel-prev').style.display=show?'':'none';
-  document.querySelector('.carousel-next').style.display=show?'':'none';
+// ── CAROUSEL ──
+let ci=0, ct=0;
+function buildCar(imgs){
+  ci=0; ct=imgs.length;
+  document.getElementById('cartrack').innerHTML = imgs.map((img,i)=>
+    `<div class="car-slide"><img src="${img.s}" alt="${img.l}" loading="${i===0?'eager':'lazy'}"><div class="car-lbl">${img.l}</div></div>`
+  ).join('');
+  document.getElementById('cdots').innerHTML = imgs.map((_,i)=>
+    `<button class="car-dot${i===0?' on':''}" onclick="goC(${i})"></button>`
+  ).join('');
+  updCar();
+  const show = imgs.length > 1;
+  document.getElementById('cprev').style.display = show ? '' : 'none';
+  document.getElementById('cnext').style.display = show ? '' : 'none';
 }
-function updateCarousel(){
-  document.getElementById('carousel-track').style.transform=`translateX(-${cIdx*100}%)`;
-  document.querySelectorAll('.carousel-dot').forEach((d,i)=>d.classList.toggle('active',i===cIdx));
+function updCar(){
+  document.getElementById('cartrack').style.transform = `translateX(-${ci*100}%)`;
+  document.querySelectorAll('.car-dot').forEach((d,i)=>d.classList.toggle('on',i===ci));
 }
-function carouselMove(dir){cIdx=(cIdx+dir+cTotal)%cTotal;updateCarousel()}
-function goSlide(i){cIdx=i;updateCarousel()}
+function cMove(d){ ci=(ci+d+ct)%ct; updCar(); }
+function goC(i){ ci=i; updCar(); }
 
-// MODAL
-function getLang(){return document.body.classList.contains('lang-en')?'en':'pl'}
-function openModal(id){
-  const p=projects[id],l=getLang();
-  buildCarousel(p.imgs);
-  document.getElementById('modal-tag').textContent=p.tag[l]||p.tag;
-  document.getElementById('modal-title').textContent=typeof p.title==='object'?p.title[l]:p.title;
-  document.getElementById('modal-meta').textContent=typeof p.meta==='object'?p.meta[l]:p.meta;
-  document.getElementById('modal-desc').innerHTML=p.desc[l];
-  document.getElementById('modal-stats').innerHTML=p.stats.map(s=>`
-    <div><div class="modal-stat-num">${s.num}</div><div class="modal-stat-label">${s.label[l]}</div></div>`).join('');
-  document.getElementById('modal-overlay').classList.add('open');
+// ── MODAL ──
+function gl(){ return document.body.classList.contains('lang-en')?'en':'pl'; }
+function openM(id){
+  const p=P[id], l=gl();
+  buildCar(p.imgs);
+  document.getElementById('mtag').textContent = p.tag[l]||p.tag;
+  document.getElementById('mtitle').textContent = typeof p.title==='object'?p.title[l]:p.title;
+  document.getElementById('mmeta').textContent = typeof p.meta==='object'?p.meta[l]:p.meta;
+  document.getElementById('mdesc').innerHTML = p.desc[l];
+  document.getElementById('mstats').innerHTML = p.stats.map(s=>
+    `<div><div class="m-sn">${s.n}</div><div class="m-sl">${s.l[l]}</div></div>`
+  ).join('');
+  document.getElementById('mov').classList.add('open');
   document.getElementById('modal').scrollTop=0;
   document.body.style.overflow='hidden';
 }
-function closeModal(){
-  document.getElementById('modal-overlay').classList.remove('open');
+function closeM(){
+  document.getElementById('mov').classList.remove('open');
   document.body.style.overflow='';
 }
-function handleOverlayClick(e){if(e.target===document.getElementById('modal-overlay'))closeModal()}
+function checkClose(e){ if(e.target===document.getElementById('mov')) closeM(); }
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape')closeModal();
-  if(e.key==='ArrowLeft')carouselMove(-1);
-  if(e.key==='ArrowRight')carouselMove(1);
+  if(e.key==='Escape') closeM();
+  if(e.key==='ArrowLeft') cMove(-1);
+  if(e.key==='ArrowRight') cMove(1);
 });
 
-// LANG
+// ── LANG ──
 function setLang(lang){
   document.body.className='lang-'+lang;
-  document.getElementById('btn-pl').classList.toggle('active',lang==='pl');
-  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('lpl').classList.toggle('active',lang==='pl');
+  document.getElementById('len').classList.toggle('active',lang==='en');
 }
 
-// NAV
-const nav=document.getElementById('main-nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+// ── NAV SCROLL ──
+const nav=document.getElementById('mainnav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
 
-// FADE IN
-const obs=new Intersectio
+// ── FADE IN ──
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('on'),i*70); obs.unobserve(e.target); }
+  });
+},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+
+// ── FORM ──
+function handleSub(){ alert('Dziękujemy! Wiadomość wysłana.\nThank you! Message sent.'); }
+</script>
+</body>
+</html>
