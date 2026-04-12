@@ -163,6 +163,7 @@ footer a:hover{color:var(--gold)}
   .clayout{grid-template-columns:1fr;gap:44px}
   footer{padding:20px;flex-direction:column;gap:10px;text-align:center}
   .m-body{padding:20px 20px 32px}
+}
   @font-face {
   font-family: 'Timeless';
   src: url('https://drive.google.com/thumbnail?id=1lT6vzN89CcfGeDGHH4mhLSS9KQ_THMLQ') format('truetype');
@@ -174,7 +175,7 @@ footer a:hover{color:var(--gold)}
   src: url('https://drive.google.com/thumbnail?id=1R0daoXpnp_wN_AcxfREWkh00VQ8rU2QT') format('truetype');
   font-weight: 400;
 }
-}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -477,7 +478,7 @@ var obs=new IntersectionObserver(function(entries){entries.forEach(function(e,i)
 document.querySelectorAll('.fi').forEach(function(el){obs.observe(el);});
 
 function handleSub() {
-  const lang = document.documentElement.lang || 'pl';
+  const lang = document.body.classList.contains('lang-en') ? 'en' : 'pl';
 
   const params = {
     from_name: document.querySelector('.fg input[type="text"]').value,
