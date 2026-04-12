@@ -176,6 +176,10 @@ footer a:hover{color:var(--gold)}
 }
 }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init("HSS-TPk2RE1iMV5Ks");</script>
+  
 </head>
 <body class="lang-pl">
 
@@ -472,7 +476,25 @@ window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',scro
 var obs=new IntersectionObserver(function(entries){entries.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('on');},i*70);obs.unobserve(e.target);}});},{threshold:0.08});
 document.querySelectorAll('.fi').forEach(function(el){obs.observe(el);});
 
-function handleSub(){alert('Dziękujemy! Wiadomość wysłana.\nThank you! Message sent.');}
+function handleSub() {
+  const lang = document.documentElement.lang || 'pl';
+
+  const params = {
+    from_name: document.querySelector('.fg input[type="text"]').value,
+    from_email: document.querySelector('.fg input[type="email"]').value,
+    project_type: document.querySelector('.fg select').value,
+    message: document.querySelector('textarea').value,
+  };
+
+  if (!params.from_name || !params.from_email || !params.message) {
+    alert(lang === 'en' ? 'Please fill in all fields.' : 'Wypełnij wszystkie pola.');
+    return;
+  }
+
+  emailjs.send("service_ttzncci", "template_3sule1j", params)
+    .then(() => alert(lang === 'en' ? 'Thank you! Message sent.' : 'Dziękujemy! Wiadomość wysłana.'))
+    .catch(() => alert(lang === 'en' ? 'Error sending. Please try again.' : 'Błąd wysyłki. Spróbuj ponownie.'));
+}
 </script>
 </body>
 </html>
